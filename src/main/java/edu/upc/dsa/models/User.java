@@ -39,5 +39,9 @@ public class User {
     }
     public String getPassword(){ return this.password; }
 
+    @Override
+    public String toString() {
+        return "User [id="+id+", name=" + name + ", surname=" + surname +",birthday= "+ birthday +",mail= "+ mail+ ",password= "+ password+"]";
+    }
 
 }

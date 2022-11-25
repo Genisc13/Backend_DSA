@@ -4,6 +4,8 @@ import edu.upc.dsa.exemptions.*;
 import edu.upc.dsa.models.Credentials;
 
 import java.util.*;
+
+import edu.upc.dsa.models.Gadget;
 import edu.upc.dsa.models.User;
 import edu.upc.dsa.models.UsersWithoutPassword;
 import org.apache.log4j.Logger;
@@ -11,6 +13,8 @@ import org.apache.log4j.Logger;
 public class GameManagerImpl implements GameManager {
     private static GameManager instance;
     Map<String, User> users;
+
+    ArrayList<Gadget> gadgetlist;
     final static Logger logger = Logger.getLogger(GameManagerImpl.class);
 
     public GameManagerImpl() {
@@ -62,5 +66,29 @@ public class GameManagerImpl implements GameManager {
         }
         logger.info("Nice work logging the user!");
     }
+    public List<Gadget> gadgetList(){
+        return this.gadgetlist;
+    }
+    public Gadget getGadget(String id){
+        logger.info("getObjeto("+id+")");
 
+        for (Gadget t: this.gadgetlist) {
+            if (t.getId().equals(id)) {
+                logger.info("getObjeto("+id+"): "+t);
+
+                return t;
+            }
+        }
+        logger.warn("not found " + id);
+        return null;
+    }
+    public void deleteGadget(String id){
+        Gadget t = this.getGadget(id);
+        if (t==null) {
+            logger.warn("not found " + t);
+        }
+        else logger.info(t+" deleted ");
+
+        this.gadgetlist.remove(t);
+    }
 }
