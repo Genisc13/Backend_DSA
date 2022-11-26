@@ -13,7 +13,7 @@ public class User {
     String birthday;
     String mail;
     String password;
-
+    Status status;
     public User(){};
     public User(String name, String surname,String date, String mail, String password){
         this.id = RandomUtils.getId();
@@ -22,6 +22,7 @@ public class User {
         this.birthday =date;
         this.mail=mail;
         this.password=password;
+        this.status=new Status(id,0,0,0);
     }
 
     public String getName() {
@@ -39,9 +40,20 @@ public class User {
     }
     public String getPassword(){ return this.password; }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+    public void updateStatus(Gadget gadget){
+        status.addGadget(gadget);
+    }
+
     @Override
     public String toString() {
-        return "User [id="+id+", name=" + name + ", surname=" + surname +",birthday= "+ birthday +",mail= "+ mail+ ",password= "+ password+"]";
+        return "User [id="+id+", name=" + name + ", surname=" + surname +",birthday= "+ birthday +",mail= "+ mail+ ",password= "+ password+",status= "+status+"]";
     }
 
 }

@@ -6,6 +6,8 @@ public class Gadget {
     String description;
     String unity_Shape;
 
+    public Gadget() {}
+
     public Gadget(String id, int cost, String description, String unity_Shape) {
         this.setId(id);
         this.setCost(cost);

@@ -1,24 +1,24 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.exemptions.*;
+import edu.upc.dsa.exceptions.*;
 import edu.upc.dsa.models.Credentials;
 
 import java.util.*;
 
 import edu.upc.dsa.models.Gadget;
 import edu.upc.dsa.models.User;
-import edu.upc.dsa.models.UsersWithoutPassword;
 import org.apache.log4j.Logger;
 
 public class GameManagerImpl implements GameManager {
     private static GameManager instance;
     Map<String, User> users;
 
-    ArrayList<Gadget> gadgetlist;
+    ArrayList<Gadget> gadgetList;
     final static Logger logger = Logger.getLogger(GameManagerImpl.class);
 
     public GameManagerImpl() {
         this.users=new HashMap<>();
+        this.gadgetList=new ArrayList<>();
     }
 
     public static GameManager getInstance() {
@@ -67,28 +67,96 @@ public class GameManagerImpl implements GameManager {
         logger.info("Nice work logging the user!");
     }
     public List<Gadget> gadgetList(){
-        return this.gadgetlist;
+        return this.gadgetList;
     }
-    public Gadget getGadget(String id){
-        logger.info("getObjeto("+id+")");
 
-        for (Gadget t: this.gadgetlist) {
-            if (t.getId().equals(id)) {
-                logger.info("getObjeto("+id+"): "+t);
+    @Override
+    public void addGadget(String idGadget, int cost, String description, String unity_Shape) {
+        Gadget g= new Gadget(idGadget,cost,description,unity_Shape);
+        gadgetList.add(g);
+    }
 
-                return t;
+    @Override
+    public void updateGadget(Gadget gadget) throws GadgetDoesNotExistException {
+        logger.info("updateGadget("+gadget+")");
+        Integer position = searchGadgetPosition(gadget.getId());
+        if (position==-1){
+            logger.warn("This gadget not found: " + gadget.getId());
+            throw new GadgetDoesNotExistException();
+        }
+        else{
+            gadgetList.get(position).setCost(gadget.getCost());
+            gadgetList.get(position).setId(gadget.getId());
+            gadgetList.get(position).setDescription(gadget.getDescription());
+            gadgetList.get(position).setUnity_Shape(gadget.getUnity_Shape());
+            logger.info("Gadget updated");
+        }
+    }
+    public int searchGadgetPosition(String idGadget){
+        logger.info("searchGadgetPosition("+idGadget+")");
+        int i=0;
+        for (Gadget g: this.gadgetList) {
+            if (g.getId().equals(idGadget)) {
+                i=i+1;
+                return i;
             }
         }
-        logger.warn("not found " + id);
-        return null;
+        return -1;
     }
-    public void deleteGadget(String id){
+    @Override
+    public void buyGadget(String idGadget, String idUser) throws IncorrectCredentialsException, NotEnoughMoneyException, GadgetDoesNotExistException {
+        logger.info("buyGadget("+idGadget+", "+idUser+")");
+        Integer position = searchGadgetPosition(idGadget);
+        if (position==-1){
+            logger.warn("Gadget does not exist");
+            throw new GadgetDoesNotExistException();
+        }
+        else{
+            User u = users.get(idUser);
+            if (u==null) {
+                logger.warn("Credentials not found");
+                //no se si voldrieu fer una excepcio mes concreta de nomes l'id
+                throw new IncorrectCredentialsException();
+            }
+            int money = users.get(idUser).getStatus().getCoins();
+            Integer cost = gadgetList.get(position).getCost();
+            if (money < cost){
+                logger.warn(cost+" is not enough money");
+                throw new NotEnoughMoneyException();
+            }
+            else {
+                logger.info("Gadget bought");
+                u.updateStatus(gadgetList.get(position));
+            }
+        }
+    }
+
+    public Gadget getGadget(String idGadget) throws GadgetDoesNotExistException {
+        logger.info("getGadget("+idGadget+")");
+        /*for (Gadget t: this.gadgetList) {
+            if (t.getId().equals(idGadget)) {
+                logger.info("getGadget("+idGadget+"): "+t);
+                return t;
+            }
+        }*/
+        Integer position = searchGadgetPosition(idGadget);
+        if (position==-1){
+            logger.warn("not found " + idGadget);
+            throw new GadgetDoesNotExistException();
+        }
+        else{
+            logger.info("Gadget found"+idGadget+")");
+            return gadgetList.get(position);
+        }
+    }
+
+    public void deleteGadget(String id) throws GadgetDoesNotExistException {
         Gadget t = this.getGadget(id);
         if (t==null) {
             logger.warn("not found " + t);
         }
         else logger.info(t+" deleted ");
 
-        this.gadgetlist.remove(t);
+        this.gadgetList.remove(t);
     }
 }

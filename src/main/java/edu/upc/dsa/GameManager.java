@@ -1,10 +1,7 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.exemptions.*;
-import edu.upc.dsa.models.Credentials;
-import edu.upc.dsa.models.Gadget;
-import edu.upc.dsa.models.User;
-import edu.upc.dsa.models.UsersWithoutPassword;
+import edu.upc.dsa.exceptions.*;
+import edu.upc.dsa.models.*;
 
 import java.util.List;
 import java.util.Map;
@@ -14,10 +11,12 @@ public interface GameManager {
     public int size();
     public String addUser(String name, String surname, String date, String mail, String password) throws EmailAlreadyBeingUsedException;
     public Map<String, User> getUsers();
-
     public List<Gadget> gadgetList();
-    public Gadget getGadget(String id);
-    public void deleteGadget(String id);
+    public void addGadget(String idGadget, int cost, String description, String unity_Shape);
+    public void updateGadget(Gadget gadget) throws GadgetDoesNotExistException;
+    public void buyGadget(String idGadget, String idUser) throws IncorrectCredentialsException, NotEnoughMoneyException, GadgetDoesNotExistException;
+    public Gadget getGadget(String id) throws GadgetDoesNotExistException;
+    public void deleteGadget(String id) throws GadgetDoesNotExistException;
     public void LogIn(Credentials credentials) throws IncorrectCredentialsException;
 
 }

@@ -1,17 +1,9 @@
 package edu.upc.dsa;
 
 
-import edu.upc.dsa.exemptions.EmailAlreadyBeingUsedException;
-import edu.upc.dsa.exemptions.ProductDoesNotExistException;
-import edu.upc.dsa.exemptions.UserDoesNotExistException;
-import edu.upc.dsa.exemptions.UserHasNotMoneyException;
-import edu.upc.dsa.models.User;
+import edu.upc.dsa.exceptions.EmailAlreadyBeingUsedException;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
-
-import java.util.List;
 
 public class GameManagerImplTest {
     GameManager sm;

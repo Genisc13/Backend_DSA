@@ -1,4 +1,4 @@
-package edu.upc.dsa.exemptions;
+package edu.upc.dsa.exceptions;
 
 public class EmailAlreadyBeingUsedException extends Exception{
 

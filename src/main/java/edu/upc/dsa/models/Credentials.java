@@ -3,8 +3,7 @@ package edu.upc.dsa.models;
 public class Credentials {
     String Email;
     String password;
-    public Credentials() {
-    }
+    public Credentials() {}
     public Credentials(String email, String password){
         this.Email=email;
         this.password=password;
