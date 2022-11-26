@@ -16,7 +16,7 @@ public interface GameManager {
     public void updateGadget(Gadget gadget) throws GadgetDoesNotExistException;
     public void buyGadget(String idGadget, String idUser) throws IncorrectCredentialsException, NotEnoughMoneyException, GadgetDoesNotExistException;
     public Gadget getGadget(String id) throws GadgetDoesNotExistException;
-    public void deleteGadget(String id) throws GadgetDoesNotExistException;
+    public Gadget deleteGadget(String id) throws GadgetDoesNotExistException;
     public void LogIn(Credentials credentials) throws IncorrectCredentialsException;
 
 }

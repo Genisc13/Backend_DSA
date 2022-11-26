@@ -67,7 +67,15 @@ public class GameManagerImpl implements GameManager {
         logger.info("Nice work logging the user!");
     }
     public List<Gadget> gadgetList(){
-        return this.gadgetList;
+
+        List<Gadget> lista=this.gadgetList;
+        lista.sort(new Comparator<Gadget>() {
+            @Override
+            public int compare(Gadget o1, Gadget o2) {
+                return Double.compare(o2.getCost(), o1.getCost());
+            }
+        });
+        return lista;
     }
 
     @Override
@@ -97,9 +105,9 @@ public class GameManagerImpl implements GameManager {
         int i=0;
         for (Gadget g: this.gadgetList) {
             if (g.getId().equals(idGadget)) {
-                i=i+1;
                 return i;
             }
+            i+=1;
         }
         return -1;
     }
@@ -150,13 +158,15 @@ public class GameManagerImpl implements GameManager {
         }
     }
 
-    public void deleteGadget(String id) throws GadgetDoesNotExistException {
+    public Gadget deleteGadget(String id) throws GadgetDoesNotExistException {
         Gadget t = this.getGadget(id);
         if (t==null) {
             logger.warn("not found " + t);
+            throw new GadgetDoesNotExistException();
         }
         else logger.info(t+" deleted ");
 
         this.gadgetList.remove(t);
+        return t;
     }
 }
