@@ -1,3 +1,58 @@
-<h1>Hello</h1>
-<p>World</p>
-<img src="espinete.jpg">
+<html>
+<head>
+    <title>SmallWeb</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#button").click(function(){
+                $.ajax({
+                    type: 'GET',
+                    url: 'https://api.github.com/users/' + document.getElementById("gitName").value + '/repos',
+                    data: { get_param: 'value'},
+                    dataType: 'text',
+                    success: function(data){
+                        var json = $.parseJSON(data);
+                        $('#results').empty();
+                        for (var i=0;i<json.length;++i)
+                        {
+                            $('#results').append('<tr class="warning">'+
+                                '<td>'+json[i].name+'</td>'+
+                                '<td>'+json[i].description+'</td>'+
+                                '<td>'+json[i].stargazers_count+'</td>'+
+                            '</tr>');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="page-header">
+        <h3> Hi there, fellas! This is a small Web xD LOL </h3>
+    </div>
+    <div class="text-center"><b>Introduce your Github name:</b></div><br>
+    <div class="container">
+        <label for="gitName"></label><input type="text" class="form-control" id="gitName" value=""><br>
+        <input type="button" class="btn btn-block btn-warning" id="button" value="See user information"><br>
+    </div>
+    <h3 class="text-center text-warning">USER REPOSITORIES</h3>
+    <div class="container">
+        <table class="table table-hover table-bordered">
+            <thread>
+                <tr>
+                    <th>Repository</th>
+                    <th>Description</th>
+                    <th>Followers</th>
+                </tr>
+            </thread>
+            <tbody id="results">
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
