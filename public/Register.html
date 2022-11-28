@@ -14,22 +14,25 @@
                 var birthday=$("#birthday").val();
                 var userMail=$("#userEmail").val();
                 var userPassword=$("#userPassword").val();
-
-                $.ajax({
-                    contentType: "application/json",
-                    type: 'POST',
-                    url: '/dsaApp/shop/user/register',
-                    data: JSON.stringify({"name": name, "surname": surname, "birthday": birthday, "mail":userMail,"password":userPassword}),
-                    dataType: 'json',
-                    success: function(json){
-                        alert("Data: " + json + "\nStatus: " + status);
-                        $(location).attr('href', "index.html");
-                    },
-                    error: function (json){
-
-                    }
-                })
-
+                if (name==="" || surname==="" || birthday==="" || userMail==="" || userPassword===""){
+                    alert("Fulfill all the gaps!");
+                }
+                else{
+                    $.ajax({
+                        contentType: "application/json",
+                        type: 'POST',
+                        url: '/dsaApp/shop/user/register',
+                        data: JSON.stringify({"name": name, "surname": surname, "birthday": birthday, "mail":userMail,"password":userPassword}),
+                        dataType: 'json',
+                        success: function(json){
+                            alert("Data: " + json + "\nStatus: " + status);
+                            $(location).attr('href', "index.html");
+                        },
+                        error: function (json){
+                            alert("Mail already is in use!");
+                        }
+                    })
+                }
             });
         });
     </script>
@@ -49,7 +52,7 @@
         <label for="userEmail">Email</label>
         <input type="text" class="form-control" id="userEmail"><br>
         <label for="userPassword">Password</label>
-        <input type="text" class="form-control" id="userPassword"><br>
+        <input type="password" class="form-control" id="userPassword"><br>
         <button type="button" class="btn btn-info" id="registerButton">Login</button>
     </div>
 </div>

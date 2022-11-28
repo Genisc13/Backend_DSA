@@ -11,20 +11,28 @@
             $("#loginButton").click(function(){
                 var userMail=$("#userEmail").val();
                 var userPassword=$("#userPassword").val();
-                $.ajax({
-                    contentType: "application/json",
-                    type: 'POST',
-                    url: '/dsaApp/shop/user/login',
-                    data: JSON.stringify({"mail":userMail,"password":userPassword}),
-                    dataType: 'json',
-                    success: function(json){
-                        alert("Data: " + json + "\nStatus: " + status);
-                        $(location).attr('href', "GadgetActions.html");
-                    },
-                    error: function (json){
+                if(userMail==null || userPassword==null){
+                    alert("Introduce a valid password and mail!");
+                }
+                else{
+                    $.ajax({
+                        contentType: "application/json",
+                        type: 'POST',
+                        url: '/dsaApp/shop/user/login',
+                        data: JSON.stringify({"mail":userMail,"password":userPassword}),
+                        dataType: 'json',
+                        success: function(json){
+                            alert("Data: " + json + "\nStatus: " + status);
+                            $(location).attr('href', "GadgetActions.html");
+                        },
+                        error: function (json){
+                            alert("Wrong credentials!");
+                        }
+                    })
 
-                    }
-                })
+                }
+
+
 
             });
         });
@@ -39,7 +47,7 @@
         <label for="userEmail">Email</label>
         <input type="text" class="form-control" id="userEmail"><br>
         <label for="userPassword">Password</label>
-        <input type="text" class="form-control" id="userPassword"><br>
+        <input type="password" class="form-control" id="userPassword"><br>
         <button type="button" class="btn btn-info" id="loginButton">Login</button>
         <p>You don't have an account?<a href="Register.html"> Sign up!</a> </p>
     </div>
