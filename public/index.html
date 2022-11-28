@@ -9,14 +9,21 @@
     <script>
         $(document).ready(function(){
             $("#loginButton").click(function(){
-                $.post("http://localhost:8080/dsaApp/shop/user/login",
-                {
-                    email: document.getElementById("userEmail").value,
-                    password: document.getElementById("userPassword").value
-                },
-                function(data,status){
-                    alert("Data: " + data + "\nStatus: " + status);
-                });
+                var userMail=$("#userEmail").val();
+                var userPassword=$("#userPassword").val();
+                $.ajax({
+                    contentType: "application/json",
+                    type: 'POST',
+                    url: '/dsaApp/shop/user/login',
+                    data: JSON.stringify({"mail":userMail,"password":userPassword}),
+                    dataType: 'json',
+                    success: function(json){
+                        alert("Data: " + json + "\nStatus: " + status);
+                    },
+                    error: function (json){
+                    }
+                })
+
             });
         });
     </script>
@@ -30,9 +37,9 @@
         <label for="userEmail">Email</label>
         <input type="text" class="form-control" id="userEmail"><br>
         <label for="userPassword">Password</label>
-        <input type="password" class="form-control" id="userPassword"><br>
+        <input type="text" class="form-control" id="userPassword"><br>
         <button type="button" class="btn btn-info" id="loginButton">Login</button>
-        <p>You don't have an account?<a href="#"> Sign up!</a> </p>
+        <p>You don't have an account?<a href="Register.html"> Sign up!</a> </p>
     </div>
 </div>
 </body>
