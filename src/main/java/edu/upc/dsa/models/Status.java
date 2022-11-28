@@ -19,7 +19,6 @@ public class Status {
         this.gadgetsBought = new ArrayList<>();
 
     }
-
     public String getIdPlayer() {
         return idPlayer;
     }
@@ -46,6 +45,14 @@ public class Status {
 
     public Integer getExperience() {
         return experience;
+    }
+
+    public List<Gadget> getGadgetsBought() {
+        return gadgetsBought;
+    }
+
+    public void setGadgetsBought(List<Gadget> gadgetsBought) {
+        this.gadgetsBought = gadgetsBought;
     }
 
     public void setExperience(Integer experience) {

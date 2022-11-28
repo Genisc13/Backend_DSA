@@ -46,9 +46,9 @@ public class GameManagerImpl implements GameManager {
                 throw new EmailAlreadyBeingUsedException();
             }
         }
-        this.users.put(newUser.id, newUser);
+        this.users.put(newUser.getUserId(), newUser);
         logger.info("User " + newUser.getName() +" has been added correctly with the id " + newUser.getUserId());
-        return (newUser.id);
+        return newUser.getUserId();
     }
 
     public Map<String,User> getUsers(){
@@ -56,15 +56,19 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public void LogIn(Credentials credentials) throws IncorrectCredentialsException {
-        List<User> listUsers= new ArrayList<>(this.users.values());
-        for (User u: listUsers){
-            if(!Objects.equals(u.getEmail(), credentials.getEmail()) && !Objects.equals(u.getPassword(), credentials.getPassword())){
-                logger.info("Wrong credentials!");
-                throw new IncorrectCredentialsException();
+    public void userLogin(Credentials credentials) throws IncorrectCredentialsException {
+        if (!equalCredentials(credentials)) {
+            logger.warn("Credentials " + credentials.getEmail() + " and "+credentials.getPassword()+  " not found");
+            throw new IncorrectCredentialsException();
+        }
+    }
+    public Boolean equalCredentials(Credentials credentials){
+        for( User u:users.values()){
+            if (Objects.equals(u.getEmail(), credentials.getEmail())&&Objects.equals(u.getPassword(), credentials.getPassword())){
+                return true;
             }
         }
-        logger.info("Nice work logging the user!");
+        return false;
     }
     public List<Gadget> gadgetList(){
 

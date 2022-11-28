@@ -28,10 +28,11 @@
                 $.ajax({
                     type: 'GET',
                     url: 'http://localhost:8080/dsaApp/shop/gadget/all',
-                    //data: { get_param: 'value'},
+                    data: { get_param: 'value'},
                     dataType: 'text',
                     success: function(data){
                         var json = $.parseJSON(data);
+                        alert("Data: " + json + "\nStatus: " + status);
                         $('#return message').text(json);
                     }
 
