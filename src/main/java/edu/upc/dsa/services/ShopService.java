@@ -33,7 +33,6 @@ public class ShopService {
             this.tm.addGadget("2",8,"Espada sin filo","afeoejifp");
             this.tm.addGadget("3",20,"Caminacielos","afeoejep");
             this.tm.addGadget("4",2,"Percha sonica","afeoe");
-
         }
     }
     @GET
