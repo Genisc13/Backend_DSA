@@ -2,9 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Title</title>
+    <script>
+        $(document).ready(function(){
+            $("#buyButton").click(function(){
+                $.ajax({
+                    type: 'PUT',
+                    url: 'http://localhost:8080/dsaApp/shop/gadget/buy/'+ document.getElementById("idGadget").value +'/'+ document.getElementById("idUser").value,
+                    //data: { get_param: 'value'},
+                    dataType: 'text',
+                    success: function(){
+                        $('#return message').text('Gadget bought!');
+                    },
+                    error: function(){
+                        $('#return message').text('Gadget not bought!');
+                    }
+                });
+
+            });
+            $("#listButton").click(function(){
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8080/dsaApp/shop/gadget/all',
+                    //data: { get_param: 'value'},
+                    dataType: 'text',
+                    success: function(data){
+                        var json = $.parseJSON(data);
+                        $('#return message').text(json);
+                    }
+
+                });
+
+            });
+
+        });
+    </script>
 </head>
+
 <body>
+    <div class="page-header">
+        <h3> GADGET'S SHOP </h3>
+    </div>
+    <div class="text-center"><b>Buy a gadget:</b></div><br>
+    <div class="container">
+        <label for="idGadget"></label><input type="text" class="form-control" id="idGadget" value=""><br>
+        <label for="idUser"></label><input type="text" class="form-control" id="idUser" value=""><br>
+        <input type="buyButton" class="btn btn-block btn-warning" id="buyButton" value="Buy a gadget"><br>
+        <div class="text-center" id="return message"><b></b></div><br>
+    </div>
+    <div class="text-center"><b>Get the gadget list:</b></div><br>
+    <div class="container">
+        <input type="listButton" class="btn btn-block btn-warning" id="listButton" value="Get the list"><br>
+        <div class="text-center" id="return message list"><b></b></div><br>
+    </div>
 
 </body>
 </html>

@@ -56,9 +56,9 @@ public class ShopService {
             @ApiResponse(code = 201, message = "Successful", response = Gadget.class),
             @ApiResponse(code = 404, message = "Gadget does not exist")
     })
-    @Path("/gadget/{id}")
+    @Path("/gadget/{idGadget}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getGadget(@PathParam("id") String id) {
+    public Response getGadget(@PathParam("idGadget") String id) {
         try {
             Gadget gadget = this.tm.getGadget(id);
             return Response.status(201).entity(gadget).build();
@@ -87,7 +87,7 @@ public class ShopService {
         }
     }
     @POST
-    @ApiOperation(value = "Log In to the shop", notes = "Do you want to log in to our shop?")
+    @ApiOperation(value = "Login to the shop", notes = "Do you want to log in to our shop?")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response= UserInformation.class),
             @ApiResponse(code = 409, message = "Wrong credentials.")
@@ -167,8 +167,8 @@ public class ShopService {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "Gadget not found")
     })
-    @Path("/gadget/delete/{id}")
-    public Response deleteGadget(@PathParam("id") String id) {
+    @Path("/gadget/delete/{idGadget}")
+    public Response deleteGadget(@PathParam("idGadget") String id) {
         try{
             this.tm.deleteGadget(id);
             return Response.status(201).build();
