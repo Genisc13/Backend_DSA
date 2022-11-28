@@ -19,8 +19,10 @@
                     dataType: 'json',
                     success: function(json){
                         alert("Data: " + json + "\nStatus: " + status);
+                        $(location).attr('href', "GadgetActions.html");
                     },
                     error: function (json){
+
                     }
                 })
 

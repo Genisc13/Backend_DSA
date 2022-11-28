@@ -1,37 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>THE MAZE OF ROOMS</title>
     <script>
         $(document).ready(function(){
             $("#registerButton").click(function(){
-                $.post("localhost:8080/dsaApp/shop/user/register",
-                    {
-                        email: document.getElementById("userEmail").value,
-                        password: document.getElementById("userPassword").value
+                var name=$("#userName").val();
+                var surname=$("#surname").val();
+                var birthday=$("#birthday").val();
+                var userMail=$("#userEmail").val();
+                var userPassword=$("#userPassword").val();
+
+                $.ajax({
+                    contentType: "application/json",
+                    type: 'POST',
+                    url: '/dsaApp/shop/user/register',
+                    data: JSON.stringify({"name": name, "surname": surname, "birthday": birthday, "mail":userMail,"password":userPassword}),
+                    dataType: 'json',
+                    success: function(json){
+                        alert("Data: " + json + "\nStatus: " + status);
+                        $(location).attr('href', "index.html");
                     },
-                    function(data,status){
-                        alert("Data: " + data + "\nStatus: " + status);
-                    });
+                    error: function (json){
+
+                    }
+                })
+
             });
         });
     </script>
 </head>
-</head>
 <body>
 <div class="jumbotron text-center">
-    <h1>Registry on the maze of rooms</h1>
+    <h1>The maze of rooms</h1>
 </div>
 <div class="form-content">
     <div class="input-group">
+        <label for="userName">Name</label>
+        <input type="text" class="form-control" id="userName"><br>
+        <label for="surname">Surname</label>
+        <input type="text" class="form-control" id="surname"><br>
+        <label for="birthday">Birthday</label>
+        <input type="text" class="form-control" id="birthday"><br>
         <label for="userEmail">Email</label>
         <input type="text" class="form-control" id="userEmail"><br>
         <label for="userPassword">Password</label>
-        <input type="password" class="form-control" id="userPassword"><br>
-        <button type="button" class="btn btn-info" id="registerButton">Register</button>
-        <body id="successRegister"></body>
+        <input type="text" class="form-control" id="userPassword"><br>
+        <button type="button" class="btn btn-info" id="registerButton">Login</button>
     </div>
 </div>
 </body>
