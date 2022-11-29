@@ -9,6 +9,8 @@ import java.util.Map;
 public interface GameManager {
 
     public int size();
+    public int numUsers();
+    public int numGadgets();
     public String addUser(String name, String surname, String date, String mail, String password) throws EmailAlreadyBeingUsedException;
     public Map<String, User> getUsers();
 

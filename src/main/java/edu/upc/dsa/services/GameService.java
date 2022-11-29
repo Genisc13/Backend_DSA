@@ -20,11 +20,11 @@ import java.util.Objects;
 
 @Api(value = "/", description = "Endpoint to Track Service")
 @Path("/shop")
-public class ShopService {
+public class GameService {
 
     private GameManager tm;
 
-    public ShopService() throws EmailAlreadyBeingUsedException {
+    public GameService() throws EmailAlreadyBeingUsedException {
         this.tm = GameManagerImpl.getInstance();
         if (tm.size()==0) {
             this.tm.addUser("Alba","Roma", "23112001","albaroma@gmail.com","123456");
