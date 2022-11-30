@@ -77,7 +77,7 @@ public class GameManagerImpl implements GameManager {
         lista.sort(new Comparator<Gadget>() {
             @Override
             public int compare(Gadget o1, Gadget o2) {
-                return Double.compare(o2.getCost(), o1.getCost());
+                return Double.compare(o1.getCost(), o2.getCost());
             }
         });
         return lista;

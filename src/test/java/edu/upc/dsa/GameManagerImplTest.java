@@ -56,7 +56,7 @@ public class GameManagerImplTest {
     public void testAddGadgetIsPossible(){
         Assert.assertEquals(3,this.gameManager.numGadgets());
         this.gameManager.addGadget("4A",3,"Earth","Green Earth");
-        Assert.assertEquals(3,this.gameManager.numGadgets());
+        Assert.assertEquals(4,this.gameManager.numGadgets());
     }
 
     @Test
@@ -139,15 +139,38 @@ public class GameManagerImplTest {
         Assert.assertThrows(IncorrectCredentialsException.class, ()-> this.gameManager.userLogin(credentials));
     }
     @Test
-    public void testGetGadgetListIsPossible(){}
+    public void testGetGadgetListIsPossible(){
+        List<Gadget> gadgetList = this.gameManager.gadgetList();
+        Assert.assertEquals(3,gadgetList.size());
+        Assert.assertEquals("2A",gadgetList.get(0).getId());
+        Assert.assertEquals("1A",gadgetList.get(1).getId());
+        Assert.assertEquals("3A",gadgetList.get(2).getId());
+    }
     @Test
-    public void testDeleteGadgetIsPossible(){}
+    public void testDeleteGadgetIsPossible() throws GadgetDoesNotExistException{
+        List<Gadget> gadgetList = this.gameManager.gadgetList();
+        Gadget eliminado = this.gameManager.deleteGadget("2A");
+        Assert.assertEquals(2,gadgetList.size());
+        Assert.assertEquals("2A",eliminado.getId());
+        Assert.assertEquals("1A",gadgetList.get(0).getId());
+
+    }
     @Test
-    public void testDeleteGadgetDoesNotExist(){}
+    public void testDeleteGadgetDoesNotExist(){
+        Assert.assertThrows(GadgetDoesNotExistException.class, ()-> this.gameManager.deleteGadget("2B"));
+    }
     @Test
-    public void testGetGadgetIsPossible(){}
+    public void testGetGadgetIsPossible() throws GadgetDoesNotExistException{
+        List<Gadget> gadgetList = this.gameManager.gadgetList();
+        Gadget recogido=this.gameManager.getGadget("2A");
+        Assert.assertEquals("2A",gadgetList.get(0).getId());
+        Assert.assertEquals("2A",recogido.getId());
+
+    }
     @Test
-    public void testGetGadgetDoesNotExist(){}
+    public void testGetGadgetDoesNotExist(){
+        Assert.assertThrows(GadgetDoesNotExistException.class, ()-> this.gameManager.getGadget("2B"));
+    }
 
 
 
