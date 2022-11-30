@@ -26,13 +26,6 @@ public class GameManagerImpl implements GameManager {
         return instance;
     }
 
-    public int size() {
-        int ret = this.users.size();
-        logger.info("size " + ret);
-
-        return ret;
-    }
-
     public int numUsers(){
         return users.size();
     }
@@ -42,14 +35,14 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public String addUser(String name, String surname, String date, String mail, String password) throws EmailAlreadyBeingUsedException{
+    public String addUser(String name, String surname, String birthday, String email, String password) throws EmailAlreadyBeingUsedException{
         logger.info("Adding a new User Starting...");
-        User newUser= new User(name,surname,date,mail,password);
+        User newUser= new User(name,surname,birthday,email,password);
         List<User> userList = new ArrayList<>(this.users.values());
         logger.info("Checking whether this users exists...");
 
         for(User u : userList){
-            if(Objects.equals(u.getEmail(), mail)){
+            if(Objects.equals(u.getEmail(), email)){
                 logger.info("The user already exists!");
                 throw new EmailAlreadyBeingUsedException();
             }
@@ -99,7 +92,7 @@ public class GameManagerImpl implements GameManager {
     @Override
     public void updateGadget(Gadget gadget) throws GadgetDoesNotExistException {
         logger.info("updateGadget("+gadget+")");
-        Integer position = searchGadgetPosition(gadget.getId());
+        int position = searchGadgetPosition(gadget.getId());
         if (position==-1){
             logger.warn("This gadget not found: " + gadget.getId());
             throw new GadgetDoesNotExistException();
@@ -124,9 +117,9 @@ public class GameManagerImpl implements GameManager {
         return -1;
     }
     @Override
-    public void buyGadget(String idGadget, String idUser) throws IncorrectCredentialsException, NotEnoughMoneyException, GadgetDoesNotExistException {
+    public void buyGadget(String idGadget, String idUser) throws NotEnoughMoneyException, GadgetDoesNotExistException, IncorrectIdException {
         logger.info("buyGadget("+idGadget+", "+idUser+")");
-        Integer position = searchGadgetPosition(idGadget);
+        int position = searchGadgetPosition(idGadget);
         if (position==-1){
             logger.warn("Gadget does not exist");
             throw new GadgetDoesNotExistException();
@@ -134,12 +127,11 @@ public class GameManagerImpl implements GameManager {
         else{
             User u = users.get(idUser);
             if (u==null) {
-                logger.warn("Credentials not found");
-                //no se si voldrieu fer una excepcio mes concreta de nomes l'id
-                throw new IncorrectCredentialsException();
+                logger.warn("Identifier not found");
+                throw new IncorrectIdException();
             }
             int money = users.get(idUser).getStatus().getCoins();
-            Integer cost = gadgetList.get(position).getCost();
+            int cost = gadgetList.get(position).getCost();
             if (money < cost){
                 logger.warn(cost+" is not enough money");
                 throw new NotEnoughMoneyException();
@@ -159,7 +151,7 @@ public class GameManagerImpl implements GameManager {
                 return t;
             }
         }*/
-        Integer position = searchGadgetPosition(idGadget);
+        int position = searchGadgetPosition(idGadget);
         if (position==-1){
             logger.warn("not found " + idGadget);
             throw new GadgetDoesNotExistException();

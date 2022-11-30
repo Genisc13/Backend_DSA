@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>edu.upc.dsa</groupId>
-    <artifactId>rest-example2</artifactId>
+    <artifactId>Backend_DSA</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>rest-example2</name>
+    <name>Backend_DSA</name>
 
     <dependencyManagement>
         <dependencies>

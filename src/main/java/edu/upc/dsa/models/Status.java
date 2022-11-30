@@ -35,7 +35,7 @@ public class Status {
         this.currentlyPlaying = currentlyPlaying;
     }
 
-    public Integer getCoins() {
+    public int getCoins() {
         return coins;
     }
 

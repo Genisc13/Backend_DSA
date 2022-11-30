@@ -29,7 +29,7 @@ public class GameService {
 
     public GameService() throws EmailAlreadyBeingUsedException {
         this.tm = GameManagerImpl.getInstance();
-        if (tm.size()==0) {
+        if (tm.numUsers()==0) {
             this.tm.addUser("Alba","Roma", "23112001","albaroma@gmail.com","123456");
             this.tm.addUser("Maria","Ubiergo", "02112001","meri@gmail.com","123456");
             this.tm.addUser("Guillem","Purti", "02112001","guille@gmail.com","123456");
@@ -152,7 +152,7 @@ public class GameService {
     @ApiOperation(value = "buy a Gadget", notes = "Do you want to buy a Gadget?")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
-            @ApiResponse(code = 409, message = "Wrong credentials."),
+            @ApiResponse(code = 409, message = "Wrong id."),
             @ApiResponse(code = 401, message = "Gadget does not exist"),
             @ApiResponse(code = 403, message = "You have not enough money ")
     })
@@ -166,13 +166,12 @@ public class GameService {
         catch (NotEnoughMoneyException e){
             return Response.status(403).build();
         }
-        catch (IncorrectCredentialsException e) {
-            return Response.status(409).build();
-        }
         catch (GadgetDoesNotExistException e) {
             return Response.status(401).build();
         }
-
+        catch (IncorrectIdException e) {
+            return Response.status(409).build();
+        }
     }
     @PUT
     @ApiOperation(value = "update a Gadget", notes = "Do you want to update a Gadget?")
