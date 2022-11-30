@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,7 +20,7 @@
                         contentType: "application/json",
                         type: 'POST',
                         url: '/dsaApp/shop/user/login',
-                        data: JSON.stringify({"mail":userMail,"password":userPassword}),
+                        data: JSON.stringify({"email":userMail,"password":userPassword}),
                         dataType: 'json',
                         success: function(json){
                             alert("Data: " + json + "\nStatus: " + status);
@@ -39,18 +40,28 @@
     </script>
 </head>
 <body>
-    <div class="jumbotron text-center">
-        <h1>The maze of rooms</h1>
-    </div>
-    <div class="container">
-        <div class="input-group text-center" style="margin: auto; width: 50%">
-            <label for="userEmail">Email</label>
-            <input type="text" class="form-control" id="userEmail"><br>
-            <label for="userPassword">Password</label>
-            <input type="password" class="form-control" id="userPassword"><br>
-            <button type="button" class="btn btn-info" id="loginButton">Login</button>
-            <p>You don't have an account?<a href="Register.html"> Sign up!</a> </p>
+
+    <div class="cod-container" style="margin: auto; width: 50%">
+        <div class="form-header">
+            <h1>
+                The maze of rooms
+            </h1>
+        </div>
+        <div class="form-content">
+            <h3>Login</h3>
+            <form>
+                <div class="input-group" style="margin: auto; width: 50%">
+                    <label for="userEmail">Email</label>
+                    <input type="text" class="form-control" id="userEmail"><br>
+                    <label for="userPassword">Password</label>
+                    <input type="password" class="form-control" id="userPassword"><br>
+                </div>
+                <div class="form-group" style="margin: auto; width: 50%">
+                    <button type="button" class="btn btn-block btn-warning" id="loginButton">Login</button>
+                    <p>You don't have an account?<a href="Register.html"> Sign up!</a> </p>
+                </div>
+            </form>
         </div>
     </div>
 </body>
-</html>
+  
