@@ -49,12 +49,4 @@ public class GameManagerImplTest {
         this.gameManager.addUser("test", "test", "test", "susana@gmail.com", "test");
         Assert.assertEquals(6, this.gameManager.numUsers());
     }
-
-    @Test
-    public void testGetUsersReturnsUsers(){
-        Assert.assertEquals(5, this.gameManager.numUsers());
-        Map<String,User> users = this.gameManager.getUsers();
-        Assert.assertEquals(6, this.gameManager.numUsers());
-    }
-
 }
