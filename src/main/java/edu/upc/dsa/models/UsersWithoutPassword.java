@@ -4,21 +4,21 @@ public class UsersWithoutPassword {
     String name;
     String surname;
     String birthDate;
-    String mail;
+    String email;
 
     public UsersWithoutPassword(){};
 
-    public UsersWithoutPassword(String name, String surname, String birthDate, String mail){
+    public UsersWithoutPassword(String name, String surname, String birthDate, String email){
         this.name=name;
         this.surname=surname;
         this.birthDate=birthDate;
-        this.mail=mail;
+        this.email=email;
 
 
         this.setName(name);
         this.setSurname(surname);
         this.setBirthDate(birthDate);
-        this.setMail(mail);
+        this.setEmail(email);
 
 
     }
@@ -43,21 +43,14 @@ public class UsersWithoutPassword {
         this.birthDate = birthDate;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-
-
-    public String getMail() {
-        return this.mail;
-    }
-
-
-
     public String getName() {
         return this.name;
     }
 
-
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

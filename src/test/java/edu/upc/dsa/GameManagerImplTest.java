@@ -37,26 +37,24 @@ public class GameManagerImplTest {
     public void tearDown(){this.gameManager = null;}
 
     @Test
-    public void test_add_user_already_existing_throws_exception(){
+    public void testAddUserAlreadyExistingThrowsException(){
         Assert.assertEquals(5, this.gameManager.numUsers());
         Assert.assertThrows(EmailAlreadyBeingUsedException.class, ()->this.gameManager.addUser("test", "test", "test", "albaroma@gmail.com", "test"));
         Assert.assertEquals(5, this.gameManager.numUsers());
     }
 
     @Test
-    public void test_add_user_is_possible() throws EmailAlreadyBeingUsedException {
+    public void testAddUserIsPossible() throws EmailAlreadyBeingUsedException {
         Assert.assertEquals(5, this.gameManager.numUsers());
         this.gameManager.addUser("test", "test", "test", "susana@gmail.com", "test");
         Assert.assertEquals(6, this.gameManager.numUsers());
     }
 
     @Test
-    public void test_get_users_returns_users(){
+    public void testGetUsersReturnsUsers(){
         Assert.assertEquals(5, this.gameManager.numUsers());
         Map<String,User> users = this.gameManager.getUsers();
         Assert.assertEquals(6, this.gameManager.numUsers());
     }
-
-
 
 }

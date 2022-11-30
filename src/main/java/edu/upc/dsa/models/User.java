@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    public String id;
+    String idUser;
     String name;
     String surname;
     String birthday;
@@ -16,13 +16,13 @@ public class User {
     Status status;
     public User(){};
     public User(String name, String surname,String date, String email, String password){
-        this.id = RandomUtils.getId();
+        this.idUser = RandomUtils.getId();
         this.name=name;
         this.surname=surname;
         this.birthday =date;
         this.email=email;
         this.password=password;
-        this.status=new Status(id,0,50,0);
+        this.status=new Status(idUser,0,50,0);
     }
 
     public String getName() {
@@ -32,9 +32,7 @@ public class User {
         return this.surname;
     }
     public String getBirthday(){   return this.birthday;}
-    public String getUserId() {
-        return this.id;
-    }
+
     public String getEmail(){
         return this.email;
     }
@@ -44,8 +42,12 @@ public class User {
         return status;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 
     public void setName(String name) {
@@ -79,7 +81,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [id="+id+", name=" + name + ", surname=" + surname +",birthday= "+ birthday +",email= "+ email+ ",password= "+ password+",status= "+status+"]";
+        return "User [id="+idUser+", name=" + name + ", surname=" + surname +",birthday= "+ birthday +",email= "+ email+ ",password= "+ password+",status= "+status+"]";
     }
 
 }

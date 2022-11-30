@@ -54,9 +54,9 @@ public class GameManagerImpl implements GameManager {
                 throw new EmailAlreadyBeingUsedException();
             }
         }
-        this.users.put(newUser.getUserId(), newUser);
-        logger.info("User " + newUser.getName() +" has been added correctly with the id " + newUser.getUserId());
-        return newUser.getUserId();
+        this.users.put(newUser.getIdUser(), newUser);
+        logger.info("User " + newUser.getName() +" has been added correctly with the id " + newUser.getIdUser());
+        return newUser.getIdUser();
     }
 
     public Map<String,User> getUsers(){
