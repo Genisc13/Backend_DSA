@@ -8,6 +8,7 @@ import edu.upc.dsa.GameManagerImpl;
 import edu.upc.dsa.exceptions.*;
 import edu.upc.dsa.models.*;
 import io.swagger.annotations.*;
+import org.apache.log4j.Logger;
 
 
 import javax.ws.rs.*;
@@ -18,13 +19,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 @Api(value = "/", description = "Endpoint to Track Service")
 @Path("/shop")
-public class ShopService {
+public class GameService {
 
     private GameManager tm;
+    final static org.apache.log4j.Logger logger = Logger.getLogger(GameManagerImpl.class);
 
-    public ShopService() throws EmailAlreadyBeingUsedException {
+    public GameService() throws EmailAlreadyBeingUsedException {
         this.tm = GameManagerImpl.getInstance();
         if (tm.size()==0) {
             this.tm.addUser("Alba","Roma", "23112001","albaroma@gmail.com","123456");
@@ -115,7 +118,7 @@ public class ShopService {
     @POST
     @ApiOperation(value = "Login to the shop", notes = "Do you want to log in to our shop?")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response= UserInformation.class),
+            @ApiResponse(code = 201, message = "Successful", response= Credentials.class),
             @ApiResponse(code = 409, message = "Wrong credentials.")
 
 
@@ -124,11 +127,12 @@ public class ShopService {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response logIn(Credentials credentials){
         try{
+            logger.info(credentials.getEmail());
             this.tm.userLogin(credentials);
             return Response.status(201).entity(credentials).build();
         }
         catch (IncorrectCredentialsException E){
-            return Response.status(409).entity(credentials).build();
+            return Response.status(409).build();
         }
     }
     @POST

@@ -33,6 +33,14 @@ public class GameManagerImpl implements GameManager {
         return ret;
     }
 
+    public int numUsers(){
+        return users.size();
+    }
+
+    public int numGadgets(){
+        return gadgetList.size();
+    }
+
     @Override
     public String addUser(String name, String surname, String date, String mail, String password) throws EmailAlreadyBeingUsedException{
         logger.info("Adding a new User Starting...");
