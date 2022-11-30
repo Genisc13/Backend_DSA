@@ -13,7 +13,7 @@
             $("#buyButton").click(function(){
                 $.ajax({
                     type: 'PUT',
-                    url: 'http://localhost:8080/dsaApp/shop/gadget/buy/'+ document.getElementById("idGadget").value +'/'+ document.getElementById("idUser").value,
+                    url: '/dsaApp/shop/gadget/buy/'+ document.getElementById("idGadget").value +'/'+ document.getElementById("idUser").value,
                     //data: { get_param: 'value'},
                     dataType: 'text',
                     success: function(){
@@ -28,7 +28,7 @@
             $("#listButton").click(function(){
                 $.ajax({
                     type: 'GET',
-                    url: 'http://localhost:8080/dsaApp/shop/gadget/all',
+                    url: '/dsaApp/shop/gadget/all',
                     data: { get_param: 'value'},
                     dataType: 'text',
                     success: function(data){
