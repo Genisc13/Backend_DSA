@@ -34,7 +34,6 @@
                     success: function(data){
 
                         var json = $.parseJSON(data);
-                        alert("Data: " + json + "\nStatus: " + status);
                         $('#return message').text(json);
 
                         for(i=0; i<json.length; i++){
