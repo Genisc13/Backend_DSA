@@ -1,4 +1,3 @@
-Versión 1.0
 - Funcionamiento de Web y REST API en producción
 - Tests unitarios Backend hechos
 - Funcionamiento de todos los componentes basicos para la primera entrega
