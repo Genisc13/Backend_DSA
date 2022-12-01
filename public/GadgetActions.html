@@ -17,10 +17,10 @@
                     //data: { get_param: 'value'},
                     dataType: 'text',
                     success: function(){
-                        $('#return message').text('Gadget bought!');
+                        alert('Gadget bought!');
                     },
                     error: function(){
-                        $('#return message').text('Gadget not bought!');
+                        alert('Gadget not bought!');
                     }
                 });
 
@@ -58,12 +58,12 @@
             <p>Buy a gadget:</p>
             <label for="idGadget"></label><input type="text" class="form-control" id="idGadget" value=""><br>
             <label for="idUser"></label><input type="text" class="form-control" id="idUser" value=""><br>
-            <input type="buyButton" class="btn btn-block btn-warning" id="buyButton" value="Buy a gadget"><br>
+            <button type="button" class="btn btn-block btn-warning" id="buyButton" value="Buy a gadget"></button>
 
         </div>
         <div class="text-center" id="return message"><b></b></div><br>
         <div class="text-center"><b>Get the gadget list:</b></div><br>
-        <input type="listButton" class="btn btn-block btn-warning" id="listButton" value="Get the list"><br>
+        <button type="button" class="btn btn-block btn-warning" id="listButton" value="Get the list"></button>
         <div class="text-center" id="return message list"><b></b></div><br>
         <table class="Repositories table">
             <tr>
