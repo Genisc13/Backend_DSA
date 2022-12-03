@@ -14,6 +14,7 @@ public class User {
     String email;
     String password;
     Status status;
+
     public User(){};
     public User(String name, String surname,String date, String email, String password){
         this.idUser = RandomUtils.getId();

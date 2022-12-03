@@ -6,6 +6,7 @@ public class UserInformation {
     String birthDate;
     String mail;
     String password;
+
     public UserInformation(){};
 
     public UserInformation(String name, String surname, String birthDate, String mail, String password){
