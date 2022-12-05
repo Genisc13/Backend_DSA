@@ -3,21 +3,21 @@ package edu.upc.dsa.models;
 public class UsersWithoutPassword {
     String name;
     String surname;
-    String birthDate;
+    String birthday;
     String email;
 
     public UsersWithoutPassword(){};
 
-    public UsersWithoutPassword(String name, String surname, String birthDate, String email){
+    public UsersWithoutPassword(String name, String surname, String birthday, String email){
         this.name=name;
         this.surname=surname;
-        this.birthDate=birthDate;
+        this.birthday =birthday;
         this.email=email;
 
 
         this.setName(name);
         this.setSurname(surname);
-        this.setBirthDate(birthDate);
+        this.setBirthday(birthday);
         this.setEmail(email);
 
 
@@ -31,16 +31,16 @@ public class UsersWithoutPassword {
         return this.surname;
     }
 
-    public String getBirthDate() {
-        return this.birthDate;
+    public String getBirthday() {
+        return this.birthday;
     }
 
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
     public String getName() {
