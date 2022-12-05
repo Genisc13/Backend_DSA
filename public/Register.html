@@ -25,7 +25,7 @@
                         contentType: "application/json",
                         type: 'POST',
                         url: '/dsaApp/shop/user/register',
-                        data: JSON.stringify({"name": name, "surname": surname, "birthday": birthday, "mail":userMail,"password":userPassword}),
+                        data: JSON.stringify({"name": name, "surname": surname, "birthday": birthday, "email":userMail,"password":userPassword}),
                         dataType: 'json',
                         success: function(json){
                             alert("User registered correctly");
@@ -69,4 +69,4 @@
     </div>
 </div>
 </body>
-</htm
+</html
