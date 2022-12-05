@@ -104,9 +104,9 @@ public class GameService {
     @Path("/user/register")
     @Consumes({MediaType.APPLICATION_JSON})
     public Response newUser(UserInformation newUser){
-        if (Objects.equals(newUser.getName(), "") || Objects.equals(newUser.getBirthDate(), "") || Objects.equals(newUser.getMail(), "") || Objects.equals(newUser.getPassword(), "") || Objects.equals(newUser.getSurname(), ""))  return Response.status(500).entity(newUser).build();
+        if (Objects.equals(newUser.getName(), "") || Objects.equals(newUser.getBirthday(), "") || Objects.equals(newUser.getEmail(), "") || Objects.equals(newUser.getPassword(), "") || Objects.equals(newUser.getSurname(), ""))  return Response.status(500).entity(newUser).build();
         try{
-            this.tm.addUser(newUser.getName(), newUser.getSurname(), newUser.getBirthDate(), newUser.getMail(), newUser.getPassword());
+            this.tm.addUser(newUser.getName(), newUser.getSurname(), newUser.getBirthday(), newUser.getEmail(), newUser.getPassword());
             return Response.status(201).entity(newUser).build();
         }
         catch (EmailAlreadyBeingUsedException E){

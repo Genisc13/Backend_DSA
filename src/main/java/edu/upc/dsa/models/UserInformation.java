@@ -3,23 +3,23 @@ package edu.upc.dsa.models;
 public class UserInformation {
     String name;
     String surname;
-    String birthDate;
-    String mail;
+    String birthday;
+    String email;
     String password;
 
     public UserInformation(){};
 
-    public UserInformation(String name, String surname, String birthDate, String mail, String password){
+    public UserInformation(String name, String surname, String birthday, String email, String password){
         this.name=name;
         this.surname=surname;
-        this.birthDate=birthDate;
-        this.mail=mail;
+        this.birthday =birthday;
+        this.email =email;
         this.password=password;
 
         this.setName(name);
         this.setSurname(surname);
-        this.setBirthDate(birthDate);
-        this.setMail(mail);
+        this.setBirthday(birthday);
+        this.setEmail(email);
         this.setPassword(password);
 
     }
@@ -32,28 +32,28 @@ public class UserInformation {
         return this.surname;
     }
 
-    public String getBirthDate() {
-        return this.birthDate;
+    public String getBirthday() {
+        return this.birthday;
     }
 
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
-    public void setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getMail() {
-        return this.mail;
+    public String getEmail() {
+        return this.email;
     }
 
     public String getPassword() {
