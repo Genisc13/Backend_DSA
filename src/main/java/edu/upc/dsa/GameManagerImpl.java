@@ -92,16 +92,16 @@ public class GameManagerImpl implements GameManager {
     @Override
     public void updateGadget(Gadget gadget) throws GadgetDoesNotExistException {
         logger.info("updateGadget("+gadget+")");
-        int position = searchGadgetPosition(gadget.getId());
+        int position = searchGadgetPosition(gadget.getIdGadget());
         if (position==-1){
-            logger.warn("This gadget not found: " + gadget.getId());
+            logger.warn("This gadget not found: " + gadget.getIdGadget());
             throw new GadgetDoesNotExistException();
         }
         else{
             gadgetList.get(position).setCost(gadget.getCost());
-            gadgetList.get(position).setId(gadget.getId());
+            gadgetList.get(position).setIdGadget(gadget.getIdGadget());
             gadgetList.get(position).setDescription(gadget.getDescription());
-            gadgetList.get(position).setUnity_Shape(gadget.getUnity_Shape());
+            gadgetList.get(position).setUnityShape(gadget.getUnityShape());
             logger.info("Gadget updated");
         }
     }
@@ -109,7 +109,7 @@ public class GameManagerImpl implements GameManager {
         logger.info("searchGadgetPosition("+idGadget+")");
         int i=0;
         for (Gadget g: this.gadgetList) {
-            if (g.getId().equals(idGadget)) {
+            if (g.getIdGadget().equals(idGadget)) {
                 return i;
             }
             i+=1;
@@ -130,7 +130,7 @@ public class GameManagerImpl implements GameManager {
                 logger.warn("Identifier not found");
                 throw new IncorrectIdException();
             }
-            int money = users.get(idUser).getStatus().getCoins();
+            int money = users.get(idUser).getCoins();
             int cost = gadgetList.get(position).getCost();
             if (money < cost){
                 logger.warn(cost+" is not enough money");
@@ -138,7 +138,6 @@ public class GameManagerImpl implements GameManager {
             }
             else {
                 logger.info("Gadget bought");
-                u.updateStatus(gadgetList.get(position));
             }
         }
     }

@@ -144,8 +144,8 @@ public class GameService {
     @Path("/gadget/create")
     @Consumes({MediaType.APPLICATION_JSON})
     public Response newGadget(Gadget newGadget){
-        if (newGadget.getId()==null || newGadget.getCost()<0 || newGadget.getDescription()==null || newGadget.getUnity_Shape()==null)  return Response.status(500).entity(newGadget).build();
-        this.tm.addGadget(newGadget.getId(),newGadget.getCost(),newGadget.getDescription(),newGadget.getUnity_Shape());
+        if (newGadget.getIdGadget()==null || newGadget.getCost()<0 || newGadget.getDescription()==null || newGadget.getUnityShape()==null)  return Response.status(500).entity(newGadget).build();
+        this.tm.addGadget(newGadget.getIdGadget(),newGadget.getCost(),newGadget.getDescription(),newGadget.getUnityShape());
         return Response.status(201).entity(newGadget).build();
     }
     @PUT

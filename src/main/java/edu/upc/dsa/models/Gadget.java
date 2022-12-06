@@ -1,26 +1,26 @@
 package edu.upc.dsa.models;
 
 public class Gadget {
-    String id;
+    String idGadget;
     int cost;
     String description;
-    String unity_Shape;
+    String unityShape;
 
     public Gadget() {}
 
-    public Gadget(String id, int cost, String description, String unity_Shape) {
-        this.setId(id);
+    public Gadget(String id, int cost, String description, String unityShape) {
+        this.setIdGadget(id);
         this.setCost(cost);
         this.setDescription(description);
-        this.setUnity_Shape(unity_Shape);
+        this.setUnityShape(unityShape);
     }
 
-    public String getId() {
-        return id;
+    public String getIdGadget() {
+        return idGadget;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdGadget(String idGadget) {
+        this.idGadget = idGadget;
     }
 
     public int getCost() {
@@ -39,15 +39,11 @@ public class Gadget {
         this.description = description;
     }
 
-    public String getUnity_Shape() {
-        return unity_Shape;
+    public String getUnityShape() {
+        return unityShape;
     }
 
-    public void setUnity_Shape(String unity_Shape) {
-        this.unity_Shape = unity_Shape;
-    }
-    @Override
-    public String toString() {
-        return "User [id="+id+", cost=" + cost + ", Description=" + description +",unity_Shape= "+ unity_Shape +"]";
+    public void setUnityShape(String unityShape) {
+        this.unityShape = unityShape;
     }
 }

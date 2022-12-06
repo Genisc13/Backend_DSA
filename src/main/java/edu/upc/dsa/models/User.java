@@ -13,17 +13,23 @@ public class User {
     String birthday;
     String email;
     String password;
-    Status status;
+    Boolean currentlyPlaying;
+    Integer coins;
+    Integer experience;
+
 
     public User(){};
-    public User(String name, String surname,String date, String email, String password){
+    public User(String name, String surname,String date, String email, String password) {
         this.idUser = RandomUtils.getId();
-        this.name=name;
-        this.surname=surname;
-        this.birthday =date;
-        this.email=email;
-        this.password=password;
-        this.status=new Status(idUser,0,50,0);
+        this.name = name;
+        this.surname = surname;
+        this.birthday = date;
+        this.email = email;
+        this.password = password;
+        this.currentlyPlaying = false;
+        this.coins = 50;
+        this.experience = 0;
+
     }
 
     public String getName() {
@@ -37,10 +43,19 @@ public class User {
     public String getEmail(){
         return this.email;
     }
+
     public String getPassword(){ return this.password; }
 
-    public Status getStatus() {
-        return status;
+    public Boolean getCurrentlyPlaying() {
+        return currentlyPlaying;
+    }
+
+    public Integer getCoins() {
+        return coins;
+    }
+
+    public Integer getExperience() {
+        return experience;
     }
 
     public String getIdUser() {
@@ -71,18 +86,15 @@ public class User {
         this.password = password;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setExperience(Integer experience) {
+        this.experience = experience;
     }
 
-    public void updateStatus(Gadget gadget){
-        this.status.addGadget(gadget);
-        this.status.setCoins(this.status.getCoins()-gadget.getCost());
+    public void setCurrentlyPlaying(Boolean currentlyPlaying) {
+        this.currentlyPlaying = currentlyPlaying;
     }
 
-    @Override
-    public String toString() {
-        return "User [id="+idUser+", name=" + name + ", surname=" + surname +",birthday= "+ birthday +",email= "+ email+ ",password= "+ password+",status= "+status+"]";
+    public void setCoins(Integer coins) {
+        this.coins = coins;
     }
-
 }

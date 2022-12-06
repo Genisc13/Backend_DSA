@@ -14,7 +14,7 @@ public interface GameManager {
     public Map<String, User> getUsers();
     public void userLogin(Credentials credentials) throws IncorrectCredentialsException;
     public List<Gadget> gadgetList();
-    public void addGadget(String idGadget, int cost, String description, String unity_Shape);
+    public void addGadget(String idGadget, int cost, String description, String unityShape);
     public void updateGadget(Gadget gadget) throws GadgetDoesNotExistException;
     public void buyGadget(String idGadget, String idUser) throws NotEnoughMoneyException, GadgetDoesNotExistException, IncorrectIdException;
     public Gadget getGadget(String id) throws GadgetDoesNotExistException;
