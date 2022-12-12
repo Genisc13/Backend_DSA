@@ -27,7 +27,7 @@ public class GameManagerDBImpl implements GameManager{
     public GameManagerDBImpl(){
         this.session = FactorySession.openSession("jdbc:mariadb://localhost:3306/rooms","rooms", "rooms");
         this.gadgetList=new ArrayList<>();
-        this.users=new HashMap<>();
+        this.users=this.getUsers();
     }
 
     @Override
@@ -130,6 +130,10 @@ public class GameManagerDBImpl implements GameManager{
             i+=1;
         }
         return -1;
+    }
+
+    public User getUser(String userIdName) {
+        return this.users.get(userIdName);
     }
 
     @Override
