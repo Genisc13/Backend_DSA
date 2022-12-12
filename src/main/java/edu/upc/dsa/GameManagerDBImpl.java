@@ -6,6 +6,7 @@ import edu.upc.dsa.models.Credentials;
 import edu.upc.dsa.models.Gadget;
 import edu.upc.dsa.models.User;
 import arg.crud.Session;
+import org.apache.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,8 +15,10 @@ import java.util.Objects;
 
 public class GameManagerDBImpl implements GameManager{
 
+    final static Logger logger = Logger.getLogger(GameManagerImpl.class);
     Session session;
     private static GameManager instance;
+
     public static GameManager getInstance() {
         if (instance==null) instance = new GameManagerDBImpl();
         return instance;
@@ -61,7 +64,7 @@ public class GameManagerDBImpl implements GameManager{
 
     @Override
     public List<Gadget> gadgetList() {
-        return null;
+        this.session.findAll(Gadget.class);
     }
 
     @Override
@@ -77,6 +80,7 @@ public class GameManagerDBImpl implements GameManager{
 
     @Override
     public void buyGadget(String idGadget, String idUser) throws NotEnoughMoneyException, GadgetDoesNotExistException, IncorrectIdException {
+        logger.info("buyGadget("+idGadget+", "+idUser+")");
 
     }
 
