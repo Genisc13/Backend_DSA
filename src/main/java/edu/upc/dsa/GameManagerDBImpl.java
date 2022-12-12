@@ -4,20 +4,20 @@ import arg.crud.FactorySession;
 import edu.upc.dsa.exceptions.*;
 import edu.upc.dsa.models.Credentials;
 import edu.upc.dsa.models.Gadget;
+import edu.upc.dsa.models.Purchase;
 import edu.upc.dsa.models.User;
 import arg.crud.Session;
 import org.apache.log4j.Logger;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class GameManagerDBImpl implements GameManager{
 
     final static Logger logger = Logger.getLogger(GameManagerImpl.class);
     Session session;
     private static GameManager instance;
+    List<Gadget> gadgetList;
+    Map<String, User> users;
 
     public static GameManager getInstance() {
         if (instance==null) instance = new GameManagerDBImpl();
@@ -47,7 +47,13 @@ public class GameManagerDBImpl implements GameManager{
 
     @Override
     public Map<String, User> getUsers() {
-        return null;
+        List<Object> usersList= this.session.findAll(User.class);
+        for(int i=0; i<usersList.size();i++){
+            User user=(User) usersList.get(i);
+            this.users.put(user.getIdUser(),user);
+        }
+        return this.users;
+
     }
 
     @Override
@@ -64,7 +70,12 @@ public class GameManagerDBImpl implements GameManager{
 
     @Override
     public List<Gadget> gadgetList() {
-        this.session.findAll(Gadget.class);
+        List<Object> gadgets= this.session.findAll(Gadget.class);
+        for(int i=0; i<gadgets.size();i++){
+            Gadget gadget=(Gadget) gadgets.get(i);
+            this.gadgetList.add(gadget);
+        }
+        return this.gadgetList;
     }
 
     @Override
@@ -81,7 +92,42 @@ public class GameManagerDBImpl implements GameManager{
     @Override
     public void buyGadget(String idGadget, String idUser) throws NotEnoughMoneyException, GadgetDoesNotExistException, IncorrectIdException {
         logger.info("buyGadget("+idGadget+", "+idUser+")");
+        int position = searchGadgetPosition(idGadget);
+        if (position==-1){
+            logger.warn("Gadget does not exist");
+            throw new GadgetDoesNotExistException();
+        }
+        else{
+            User u = users.get(idUser);
+            if (u==null) {
+                logger.warn("Identifier not found");
+                throw new IncorrectIdException();
+            }
+            int money = users.get(idUser).getCoins();
+            int cost = gadgetList.get(position).getCost();
+            if (money < cost){
+                logger.warn(cost+" is not enough money");
+                throw new NotEnoughMoneyException();
+            }
+            else {
+                logger.info("Gadget bought");
+                this.users.get(idUser).setCoins(money-cost);
+                Purchase newPurchase= new Purchase(idUser,idGadget);
+                this.session.save(newPurchase);
+            }
+        }
 
+    }
+    public int searchGadgetPosition(String idGadget){
+        logger.info("searchGadgetPosition("+idGadget+")");
+        int i=0;
+        for (Gadget g: this.gadgetList) {
+            if (g.getIdGadget().equals(idGadget)) {
+                return i;
+            }
+            i+=1;
+        }
+        return -1;
     }
 
     @Override
