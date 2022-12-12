@@ -15,6 +15,11 @@ import java.util.Objects;
 public class GameManagerDBImpl implements GameManager{
 
     Session session;
+    private static GameManager instance;
+    public static GameManager getInstance() {
+        if (instance==null) instance = new GameManagerDBImpl();
+        return instance;
+    }
 
     public GameManagerDBImpl(){
         this.session = FactorySession.openSession("jdbc:mariadb://localhost:3306/rooms","rooms", "rooms");

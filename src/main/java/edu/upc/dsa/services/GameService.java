@@ -3,6 +3,7 @@ package edu.upc.dsa.services;
 
 
 import edu.upc.dsa.GameManager;
+import edu.upc.dsa.GameManagerDBImpl;
 import edu.upc.dsa.GameManagerImpl;
 
 import edu.upc.dsa.exceptions.*;
@@ -25,10 +26,10 @@ import java.util.Objects;
 public class GameService {
 
     private GameManager tm;
-    final static org.apache.log4j.Logger logger = Logger.getLogger(GameManagerImpl.class);
+    final static org.apache.log4j.Logger logger = Logger.getLogger(GameManagerDBImpl.class);
 
     public GameService() throws EmailAlreadyBeingUsedException {
-        this.tm = GameManagerImpl.getInstance();
+        this.tm = GameManagerDBImpl.getInstance();
         if (tm.numUsers()==0) {
             this.tm.addUser("Alba","Roma", "23112001","albaroma@gmail.com","123456");
             this.tm.addUser("Maria","Ubiergo", "02112001","meri@gmail.com","123456");

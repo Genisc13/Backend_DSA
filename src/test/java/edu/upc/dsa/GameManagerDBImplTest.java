@@ -12,7 +12,7 @@ public class GameManagerDBImplTest {
 
     @Before
     public void setUp() {
-     //   gameManager = new GameManagerDBImpl();
+        gameManager = new GameManagerDBImpl();
     }
 
     @After
@@ -20,19 +20,19 @@ public class GameManagerDBImplTest {
 
     @Test
     public void testAddUser() throws EmailAlreadyBeingUsedException {
-     //   this.gameManager.addUser("Alba","Roma","23/11/2001","albar@gmail.com","123456");
+        this.gameManager.addUser("Alba","Roma","23/11/2001","albar@gmail.com","123456");
 
     }
 
     @Test
     public void testAddGadget() {
-      //  this.gameManager.addGadget("A1", 19, "molt guai", "forma");
+        this.gameManager.addGadget("A1", 19, "molt guai", "forma");
 
     }
 
     @Test
     public void testUserLogin() throws IncorrectCredentialsException {
-      //  this.gameManager.userLogin(new Credentials("albar@gmail.com","123456"));
+        this.gameManager.userLogin(new Credentials("albar@gmail.com","123456"));
 
     }
 }
