@@ -62,11 +62,11 @@ public class GameManagerImpl implements GameManager {
             logger.warn("Credentials " + credentials.getEmail() + " and "+credentials.getPassword()+  " not found");
             throw new IncorrectCredentialsException();
         }
-        return getUserByEmail(credentials.getEmail()).getIdUser();
+        else return getUserByEmail(credentials.getEmail()).getIdUser();
     }
 
     public Boolean equalCredentials(Credentials credentials){
-        for( User u:users.values()){
+        for(User u:users.values()){
             if (Objects.equals(u.getEmail(), credentials.getEmail())&&Objects.equals(u.getPassword(), credentials.getPassword())){
                 return true;
             }

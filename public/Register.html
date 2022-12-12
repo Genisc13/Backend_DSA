@@ -7,8 +7,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <title>THE MAZE OF ROOMS</title>
+
     <script>
         $(document).ready(function(){
             $("#registerButton").click(function(){
@@ -28,6 +28,7 @@
                         data: JSON.stringify({"name": name, "surname": surname, "birthday": birthday, "email":userMail,"password":userPassword}),
                         dataType: 'json',
                         success: function(json){
+
                             alert("User registered correctly");
                             $(location).attr('href', "index.html");
                         },
@@ -41,32 +42,29 @@
     </script>
 </head>
 <body>
-<div class="cod-container">
-    <div class="d-flex justify-content-center h-100">
-        <h1>The maze of rooms</h1>
-        <div class="card">
-            <div class="card-header">
-                <h3>Sign up</h3>
+<div class="cod-container" style="margin: auto; width: 50%">
+    <div class="form-header">
+        <h1>
+            Register
+        </h1>
+    </div>
+    <div class="form-content">
+        <form>
+            <div class="input-group text-center" style="margin: auto; width: 50%; padding-top: 15px">
+                <label for="userName">Name</label>
+                <input type="text" class="form-control" id="userName"><br>
+                <label for="surname">Surname</label>
+                <input type="text" class="form-control" id="surname"><br>
+                <label for="birthday">Birthday</label>
+                <input type="text" class="form-control" id="birthday"><br>
+                <label for="userEmail">Email</label>
+                <input type="text" class="form-control" id="userEmail"><br>
+                <label for="userPassword">Password</label>
+                <input type="password" class="form-control" id="userPassword"><br>
+                <button type="button" class="btn btn-block btn-warning" id="registerButton">Accept</button>
             </div>
-            <div class="card-body">
-                <form>
-                    <div class="input-group text-center" style="margin: auto; width: 50%">
-                        <label for="userName">Name</label>
-                        <input type="text" class="form-control" id="userName"><br>
-                        <label for="surname">Surname</label>
-                        <input type="text" class="form-control" id="surname"><br>
-                        <label for="birthday">Birthday</label>
-                        <input type="text" class="form-control" id="birthday"><br>
-                        <label for="userEmail">Email</label>
-                        <input type="text" class="form-control" id="userEmail"><br>
-                        <label for="userPassword">Password</label>
-                        <input type="password" class="form-control" id="userPassword"><br>
-                        <button type="button" class="btn btn-block btn-warning" id="registerButton">Login</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 </body>
-</html
+</html>

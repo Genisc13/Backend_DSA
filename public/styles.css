@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 body{
-    background-image: linear-gradient(to left, darkgreen,darkolivegreen);
+    background-image: linear-gradient(to left, darkgreen,darkgreen);
     width: 100%;
     height: 100vh;
     color:white;
@@ -23,21 +23,30 @@ body{
     color: white;
 
 }
+
 .cod-container{
     margin: auto;
-    width: 50%;
-    background-image: linear-gradient(to right, darkolivegreen,darkgreen);
+    width: 40%;
+    padding-bottom: 20px;
+    /*background-image: linear-gradient(to right, darkolivegreen,darkgreen);
+    */
+    background-image: linear-gradient(to right, green,green);
     border-radius: 40px;
     overflow: hidden;
 }
 .form-header{
-    background-image: linear-gradient(to right, darkolivegreen,darkgreen);
+    /*background-image: linear-gradient(to right, darkolivegreen,darkgreen);*/
+    background-image: linear-gradient(to right, purple, rebeccapurple);
     text-align: center;
-    padding: 30px;
+    padding: 20px;
 }
 .form-content h1{
-    color: lightyellow;
+    color: darkolivegreen;
     font-family: Georgia, serif;
     font-weight: normal;
     margin-top: 5px;
+}
+.form-content h3{
+    text-align: center;
+    padding: 20px 0;
 }

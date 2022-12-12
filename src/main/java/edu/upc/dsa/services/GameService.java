@@ -1,7 +1,6 @@
 
 package edu.upc.dsa.services;
 
-
 import edu.upc.dsa.GameManager;
 import edu.upc.dsa.GameManagerDBImpl;
 import edu.upc.dsa.GameManagerImpl;
@@ -10,7 +9,6 @@ import edu.upc.dsa.exceptions.*;
 import edu.upc.dsa.models.*;
 import io.swagger.annotations.*;
 import org.apache.log4j.Logger;
-
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
@@ -119,18 +117,17 @@ public class GameService {
     @POST
     @ApiOperation(value = "Login to the shop", notes = "Do you want to log in to our shop?")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response= Credentials.class),
+            @ApiResponse(code = 201, message = "Successful", response= UserId.class),
             @ApiResponse(code = 409, message = "Wrong credentials.")
-
-
     })
     @Path("/user/login")
     @Consumes({MediaType.APPLICATION_JSON})
     public Response logIn(Credentials credentials){
         try{
             logger.info(credentials.getEmail());
-            this.tm.userLogin(credentials);
-            return Response.status(201).entity(credentials).build();
+            String id = this.tm.userLogin(credentials);
+            UserId idUser = new UserId(id);
+            return Response.status(201).entity(idUser).build();
         }
         catch (IncorrectCredentialsException E){
             return Response.status(409).build();

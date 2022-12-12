@@ -12,35 +12,34 @@
             $("#loginButton").click(function(){
                 var userMail=$("#userEmail").val();
                 var userPassword=$("#userPassword").val();
-                if(userMail==null || userPassword==null){
-                    alert("Introduce a valid password and mail!");
+                if(userMail==="" || userPassword===""){
+                    alert("Fulfill all the gaps!");
                 }
                 else{
                     $.ajax({
                         contentType: "application/json",
                         type: 'POST',
                         url: '/dsaApp/shop/user/login',
-                        data: JSON.stringify({"email":userMail,"password":userPassword}),
-                        dataType: 'json',
-                        success: function(json){
+                        data: JSON.stringify({"email": userMail, "password": userPassword}),
+                        dataType: 'text',
+                        success: function (data) {
+                            alert(data)
+                            var idUser = $.parseJSON(data);
+                            //alert("HEY "+idUser.idUser);
+                            localStorage.setItem('idUser',idUser.idUser);
 
                             $(location).attr('href', "GadgetActions.html");
                         },
-                        error: function (json){
+                        error: function (json) {
                             alert("Wrong credentials!");
                         }
                     })
-
                 }
-
-
-
             });
         });
     </script>
 </head>
 <body>
-
     <div class="cod-container" style="margin: auto; width: 50%">
         <div class="form-header">
             <h1>
@@ -48,9 +47,8 @@
             </h1>
         </div>
         <div class="form-content">
-            <h3>Login</h3>
             <form>
-                <div class="input-group" style="margin: auto; width: 50%">
+                <div class="input-group" style="margin: auto; width: 50%; padding-top: 15px">
                     <label for="userEmail">Email</label>
                     <input type="text" class="form-control" id="userEmail"><br>
                     <label for="userPassword">Password</label>
@@ -64,4 +62,3 @@
         </div>
     </div>
 </body>
-  
