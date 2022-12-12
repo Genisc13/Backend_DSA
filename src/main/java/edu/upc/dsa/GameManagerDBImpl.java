@@ -13,9 +13,11 @@ import java.util.*;
 
 public class GameManagerDBImpl implements GameManager{
 
-    final static Logger logger = Logger.getLogger(GameManagerImpl.class);
     Session session;
     private static GameManager instance;
+
+    final static Logger logger = Logger.getLogger(GameManagerImpl.class);
+
     List<Gadget> gadgetList;
     Map<String, User> users;
 
@@ -33,12 +35,12 @@ public class GameManagerDBImpl implements GameManager{
 
     @Override
     public int numUsers() {
-        return 0;
+        return users.size();
     }
 
     @Override
     public int numGadgets() {
-        return 0;
+        return gadgetList.size();
     }
 
     @Override
