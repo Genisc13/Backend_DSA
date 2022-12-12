@@ -34,8 +34,7 @@ public class GameService {
             this.tm.addUser("Alba","Roma", "23112001","albaroma@gmail.com","123456");
             this.tm.addUser("Maria","Ubiergo", "02112001","meri@gmail.com","123456");
             this.tm.addUser("Guillem","Purti", "02112001","guille@gmail.com","123456");
-
-            //this.tm.getUsers().get(0).setId("33alba");
+            
             this.tm.addGadget("1",3,"Ojo volador","afewifp");
             this.tm.addGadget("2",8,"Espada sin filo","afeoejifp");
             this.tm.addGadget("3",550,"Caminacielos","afeoejep");
