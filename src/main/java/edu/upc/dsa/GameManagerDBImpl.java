@@ -26,8 +26,9 @@ public class GameManagerDBImpl implements GameManager{
 
     public GameManagerDBImpl(){
         this.session = FactorySession.openSession("jdbc:mariadb://localhost:3306/rooms","rooms", "rooms");
-        this.gadgetList=new ArrayList<>();
-        this.users=this.getUsers();
+        this.gadgetList = new ArrayList<>();
+        this.users = new HashMap<>();
+        this.users = this.getUsers();
     }
 
     @Override
@@ -60,8 +61,8 @@ public class GameManagerDBImpl implements GameManager{
 
     @Override
     public void userLogin(Credentials credentials) throws IncorrectCredentialsException {
-        List<Object> users = this.session.findAll(User.class);
-        for(Object user : users) {
+        List<Object> usersList = this.session.findAll(User.class);
+        for(Object user : usersList) {
             User u = (User) user;
             if(Objects.equals(u.getEmail(), credentials.getEmail())) {
                 return;
