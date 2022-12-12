@@ -26,6 +26,8 @@ public class GameManagerDBImpl implements GameManager{
 
     public GameManagerDBImpl(){
         this.session = FactorySession.openSession("jdbc:mariadb://localhost:3306/rooms","rooms", "rooms");
+        this.gadgetList=new ArrayList<>();
+        this.users=new HashMap<>();
     }
 
     @Override
