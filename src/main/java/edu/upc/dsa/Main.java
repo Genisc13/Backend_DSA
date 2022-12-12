@@ -32,8 +32,8 @@ public class Main {
 
         BeanConfig beanConfig = new BeanConfig();
 
-        //beanConfig.setHost("147.83.7.204:80");
-        beanConfig.setHost("127.0.0.1:8080");
+        beanConfig.setHost("147.83.7.204:80");
+        //beanConfig.setHost("127.0.0.1:8080");
         beanConfig.setBasePath("/dsaApp");
         beanConfig.setContact("support@example.com");
         beanConfig.setDescription("REST API for Tracks Manager");
