@@ -100,13 +100,13 @@ public class GameManagerDBImpl implements GameManager{
             throw new GadgetDoesNotExistException();
         }
         else{
-            User u = users.get(idUser);
+            User u = this.users.get(idUser);
             if (u==null) {
                 logger.warn("Identifier not found");
                 throw new IncorrectIdException();
             }
-            int money = users.get(idUser).getCoins();
-            int cost = gadgetList.get(position).getCost();
+            int money = this.users.get(idUser).getCoins();
+            int cost = this.gadgetList.get(position).getCost();
             if (money < cost){
                 logger.warn(cost+" is not enough money");
                 throw new NotEnoughMoneyException();
