@@ -84,6 +84,7 @@ public class GameManagerDBImpl implements GameManager{
     @Override
     public void addGadget(String idGadget, int cost, String description, String unityShape) {
         Gadget gadget=new Gadget(idGadget,cost,description,unityShape);
+        this.gadgetList.add(gadget);
         this.session.save(gadget);
     }
 
