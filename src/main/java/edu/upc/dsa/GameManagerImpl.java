@@ -57,12 +57,14 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public void userLogin(Credentials credentials) throws IncorrectCredentialsException {
+    public String userLogin(Credentials credentials) throws IncorrectCredentialsException {
         if (!equalCredentials(credentials)) {
             logger.warn("Credentials " + credentials.getEmail() + " and "+credentials.getPassword()+  " not found");
             throw new IncorrectCredentialsException();
         }
+        return getUserByEmail(credentials.getEmail()).getIdUser();
     }
+
     public Boolean equalCredentials(Credentials credentials){
         for( User u:users.values()){
             if (Objects.equals(u.getEmail(), credentials.getEmail())&&Objects.equals(u.getPassword(), credentials.getPassword())){
@@ -117,7 +119,7 @@ public class GameManagerImpl implements GameManager {
         return -1;
     }
     @Override
-    public void buyGadget(String idGadget, String idUser) throws NotEnoughMoneyException, GadgetDoesNotExistException, IncorrectIdException {
+    public void buyGadget(String idGadget, String idUser) throws NotEnoughMoneyException, GadgetDoesNotExistException, UserDoesNotExistException {
         logger.info("buyGadget("+idGadget+", "+idUser+")");
         int position = searchGadgetPosition(idGadget);
         if (position==-1){
@@ -128,7 +130,7 @@ public class GameManagerImpl implements GameManager {
             User u = users.get(idUser);
             if (u==null) {
                 logger.warn("Identifier not found");
-                throw new IncorrectIdException();
+                throw new UserDoesNotExistException();
             }
             int money = users.get(idUser).getCoins();
             int cost = gadgetList.get(position).getCost();
@@ -140,6 +142,13 @@ public class GameManagerImpl implements GameManager {
                 logger.info("Gadget bought");
             }
         }
+    }
+
+    public User getUserByEmail(String email) {
+        return this.users.values().stream()
+                .filter(x -> (Objects.equals(x.getEmail(), email)))
+                .findFirst()
+                .orElse(null);
     }
 
     public Gadget getGadget(String idGadget) throws GadgetDoesNotExistException {

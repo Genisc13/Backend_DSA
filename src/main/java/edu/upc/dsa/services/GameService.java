@@ -170,7 +170,7 @@ public class GameService {
         catch (GadgetDoesNotExistException e) {
             return Response.status(401).build();
         }
-        catch (IncorrectIdException e) {
+        catch (UserDoesNotExistException e) {
             return Response.status(409).build();
         }
     }

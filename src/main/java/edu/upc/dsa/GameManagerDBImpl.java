@@ -60,12 +60,12 @@ public class GameManagerDBImpl implements GameManager{
     }
 
     @Override
-    public void userLogin(Credentials credentials) throws IncorrectCredentialsException {
+    public String userLogin(Credentials credentials) throws IncorrectCredentialsException {
         List<Object> usersList = this.session.findAll(User.class);
         for(Object user : usersList) {
             User u = (User) user;
             if(Objects.equals(u.getEmail(), credentials.getEmail())) {
-                return;
+                return u.getIdUser();
             }
         }
         throw new IncorrectCredentialsException();
@@ -94,48 +94,26 @@ public class GameManagerDBImpl implements GameManager{
     }
 
     @Override
-    public void buyGadget(String idGadget, String idUser) throws NotEnoughMoneyException, GadgetDoesNotExistException, IncorrectIdException {
+    public void buyGadget(String idGadget, String idUser) throws NotEnoughMoneyException, GadgetDoesNotExistException, UserDoesNotExistException {
         logger.info("buyGadget("+idGadget+", "+idUser+")");
-        int position = searchGadgetPosition(idGadget);
-        if (position==-1){
-            logger.warn("Gadget does not exist");
-            throw new GadgetDoesNotExistException();
-        }
-        else{
-            User u = this.users.get(idUser);
-            if (u==null) {
-                logger.warn("Identifier not found");
-                throw new IncorrectIdException();
-            }
-            int money = this.users.get(idUser).getCoins();
-            int cost = this.gadgetList.get(position).getCost();
-            if (money < cost){
-                logger.warn(cost+" is not enough money");
-                throw new NotEnoughMoneyException();
-            }
-            else {
-                logger.info("Gadget bought");
-                this.users.get(idUser).setCoins(money-cost);
-                Purchase newPurchase= new Purchase(idUser,idGadget);
-                this.session.save(newPurchase);
-            }
+
+        Gadget gadget = findGadget(idGadget);
+        isGadgetNull(gadget);
+        User user = findUser(idUser);
+        isUserNull(user);
+
+        int money = user.getCoins();
+        int cost = gadget.getCost();
+        if (money < cost){
+            logger.warn(cost+" is not enough money");
+            throw new NotEnoughMoneyException();
         }
 
-    }
-    public int searchGadgetPosition(String idGadget){
-        logger.info("searchGadgetPosition("+idGadget+")");
-        int i=0;
-        for (Gadget g: this.gadgetList) {
-            if (g.getIdGadget().equals(idGadget)) {
-                return i;
-            }
-            i+=1;
-        }
-        return -1;
-    }
+        logger.info("Gadget bought");
+        this.users.get(idUser).setCoins(money-cost);
 
-    public User getUser(String userIdName) {
-        return this.users.get(userIdName);
+        Purchase purchase= new Purchase(idUser,idGadget);
+        this.session.save(purchase);
     }
 
     @Override
@@ -146,5 +124,30 @@ public class GameManagerDBImpl implements GameManager{
     @Override
     public Gadget deleteGadget(String id) throws GadgetDoesNotExistException {
         return null;
+    }
+
+    public Gadget findGadget(String idGadget) {
+        return this.gadgetList.stream()
+                .filter(x->idGadget.equals(x.getIdGadget()))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public User findUser(String userIdName) {
+        return this.users.get(userIdName);
+    }
+
+    public void isGadgetNull(Gadget gadget) throws GadgetDoesNotExistException {
+        if(gadget==null) {
+            logger.warn("Gadget does not exist");
+            throw new GadgetDoesNotExistException();
+        }
+    }
+
+    public void isUserNull(User user) throws UserDoesNotExistException {
+        if(user==null) {
+            logger.warn("User does not exist EXCEPTION");
+            throw new UserDoesNotExistException();
+        }
     }
 }

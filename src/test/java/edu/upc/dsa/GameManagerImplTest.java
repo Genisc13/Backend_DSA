@@ -79,48 +79,13 @@ public class GameManagerImplTest {
         Assert.assertThrows(GadgetDoesNotExistException.class, ()->this.gameManager.updateGadget(g));
         Assert.assertEquals(3,this.gameManager.numGadgets());
     }
-    /*
-    @Test
-    public void testBuyGadgetIsPossible() throws NotEnoughMoneyException, GadgetDoesNotExistException, IncorrectIdException {
-        Assert.assertEquals(50,this.gameManager.getUsers().get(idGuillem).getStatus().getCoins());
-        Assert.assertEquals(new ArrayList<>(),this.gameManager.getUsers().get(idGuillem).getStatus().getGadgetsBought());
-        this.gameManager.buyGadget("1A",idGuillem);
-        Assert.assertEquals(40,this.gameManager.getUsers().get(idGuillem).getStatus().getCoins());
-        Assert.assertEquals("1A",this.gameManager.getUsers().get(idGuillem).getStatus().getGadgetsBought().get(0).getId());
-        Assert.assertEquals(10,this.gameManager.getUsers().get(idGuillem).getStatus().getGadgetsBought().get(0).getCost());
-        Assert.assertEquals("Fire",this.gameManager.getUsers().get(idGuillem).getStatus().getGadgetsBought().get(0).getDescription());
-        Assert.assertEquals("Fire flames",this.gameManager.getUsers().get(idGuillem).getStatus().getGadgetsBought().get(0).getUnity_Shape());
-    }
 
-     */
-    /*
-    @Test
-    public void testBuyGadgetNotEnoughMoney() throws GadgetDoesNotExistException {
-        Assert.assertEquals(50,this.gameManager.getUsers().get(idGuillem).getStatus().getCoins());
-        Assert.assertEquals(new ArrayList<>(),this.gameManager.getUsers().get(idGuillem).getStatus().getGadgetsBought());
-        Assert.assertEquals(55,this.gameManager.getGadget("3A").getCost());
-        Assert.assertThrows(NotEnoughMoneyException.class, ()->this.gameManager.buyGadget("3A",idGuillem));
-        Assert.assertEquals(50,this.gameManager.getUsers().get(idGuillem).getStatus().getCoins());
-        Assert.assertEquals(new ArrayList<>(),this.gameManager.getUsers().get(idGuillem).getStatus().getGadgetsBought());
-    }
-
-     */
-    /*
-    @Test
-    public void testBuyGadgetDoesNotExist() {
-        Assert.assertEquals(50,this.gameManager.getUsers().get(idGuillem).getStatus().getCoins());
-        Assert.assertEquals(new ArrayList<>(),this.gameManager.getUsers().get(idGuillem).getStatus().getGadgetsBought());
-        Assert.assertThrows(GadgetDoesNotExistException.class, ()->this.gameManager.buyGadget("4A",idGuillem));
-        Assert.assertEquals(50,this.gameManager.getUsers().get(idGuillem).getStatus().getCoins());
-        Assert.assertEquals(new ArrayList<>(),this.gameManager.getUsers().get(idGuillem).getStatus().getGadgetsBought());
-    }
-
-     */
     @Test
     public void testBuyGadgetIncorrectId(){
         Assert.assertEquals(idGuillem,this.gameManager.getUsers().get(idGuillem).getIdUser());
         Assert.assertThrows(IncorrectIdException.class, ()->this.gameManager.buyGadget("3A","ggff"));
     }
+
     @Test
     public void testGetUsersIsPossible(){
         Map<String,User> userList = this.gameManager.getUsers();
