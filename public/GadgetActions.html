@@ -42,7 +42,7 @@
             $("#buyButton").click(function(){
                 $.ajax({
                     type: 'PUT',
-                    url: '/dsaApp/shop/gadget/buy/'+ document.getElementById("idGadget").value +'/'+ idUser,
+                    url: '/dsaApp/shop/gadget/buy/'+ document.getElementById("idGadget").value +'/'+ idUser.toString(),
                     //data: { get_param: 'value'},
                     dataType: 'text',
                     success: function(){
@@ -62,10 +62,21 @@
                     dataType: 'text',
                     success: function(data){
                         var json = $.parseJSON(data);
+                        var htmlLine;
 
-                        for(i=0; i<json.length; i++){
-                            
-                            $('#listGadgets').append('<tr><td>'+json[i].id+'</td><td>'+json[i].description+'</td><td>'+json[i].cost+'</td></tr>');
+                        if(json.length>0) {
+                            htmlLine='<div class="row"><div class="column"><div class="card"><p>'+json[0].description+'</p><p>'+json[0].cost+'</p></div></div>\n';
+
+                            for (i = 1; i < json.length; i++) {
+                                if (i % 3 == 0) {
+                                    htmlLine+='</div>\n' + '<div class="row"><div class="column"><div class="card"><p>'+json[i].description+'</p><p>'+json[i].cost+'</p></div></div>\n';
+                                } else{
+                                    //$('#listGadgets').append('<tr><td>'+json[i].id+'</td><td>'+json[i].description+'</td><td>'+json[i].cost+'</td></tr>');
+                                    htmlLine+='<div class="row"><div class="column"><div class="card"><p>'+json[i].description+'</p><p>'+json[i].cost+'</p></div></div>\n';
+                                }
+                            }
+                            htmlLine = htmlLine+'</div>'
+                            $('#gadgetsCards').append(htmlLine);
                         }
                     }
 
@@ -96,22 +107,9 @@
 
         <button type="button" class="btn btn-block btn-warning" id="listButton">Get the gadget's list</button>
         <div class="text-center" id="return message list"><b></b></div><br>
-        <div class="row">
-            <div class="column">
-                <div class="card">
-                    <p>Some text</p>
-                </div>
-            </div>
+        <div id="gadgetsCards">
+
         </div>
 
-        <table class="Repositories table">
-            <tr>
-                <th>Id of the gadget</th>
-                <th>Description</th>
-                <th>Cost</th>
-            </tr>
-            <tbody id="listGadgets">
-            </tbody>
-        </table>
     </div>
 </body>
