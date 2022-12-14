@@ -31,6 +31,7 @@ public class GameManagerDBImpl implements GameManager{
         this.gadgetList = new ArrayList<>();
         this.users = new HashMap<>();
         this.users = this.getUsers();
+        this.gadgetList = this.gadgetList();
     }
 
     @Override
