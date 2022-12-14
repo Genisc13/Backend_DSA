@@ -47,16 +47,18 @@ public class GameManagerDBImpl implements GameManager{
     public String addUser(String name, String surname, String date, String mail, String password) throws EmailAlreadyBeingUsedException {
         User user = new User(name, surname, date, mail, password);
         this.session.save(user);
+        logger.info("User has been added correctly in DB with id "+user.getIdUser());
         return user.getIdUser();
     }
 
     @Override
     public Map<String, User> getUsers() {
         List<Object> usersList= this.session.findAll(User.class);
-        for(int i=0; i<usersList.size();i++){
-            User user=(User) usersList.get(i);
-            this.users.put(user.getIdUser(),user);
+        for(int i=0; i<usersList.size();i++) {
+            User user = (User) usersList.get(i);
+            this.users.put(user.getIdUser(), user);
         }
+        logger.info("User list has been created correctly its size is: "+this.users.size());
         return this.users;
 
     }
@@ -64,28 +66,23 @@ public class GameManagerDBImpl implements GameManager{
     @Override
     public User getUser(String idUser) throws UserDoesNotExistException {
         logger.info("Identifier saved: "+idUser);
-
-        List<Object> usersList = this.session.findAll(User.class);
-        for(Object user : usersList) {
-            User u = (User) user;
-            if(Objects.equals(u.getIdUser(), idUser)) {
-                logger.info("User "+u.getName()+" has idUser = "+idUser);
-                return u;
-            }
-        }
-        logger.warn("Identifier not found");
-        throw new UserDoesNotExistException();
+        User user = this.users.get(idUser);
+        isUserNull(user);
+        return user;
     }
 
     @Override
     public String userLogin(Credentials credentials) throws IncorrectCredentialsException {
         List<Object> usersList = this.session.findAll(User.class);
+        logger.info("Starting logging...");
         for(Object user : usersList) {
             User u = (User) user;
-            if(Objects.equals(u.getEmail(), credentials.getEmail())) {
+            if(u.validCredentials(credentials)) {
+                logger.info("Log in has been done correctly!");
                 return u.getIdUser();
             }
         }
+        logger.info("Incorrect credentials, try again.");
         throw new IncorrectCredentialsException();
     }
 
@@ -96,6 +93,7 @@ public class GameManagerDBImpl implements GameManager{
             Gadget gadget=(Gadget) gadgets.get(i);
             this.gadgetList.add(gadget);
         }
+        logger.info("The list of gadgets has a size of "+this.gadgetList.size());
         return this.gadgetList;
     }
 
@@ -104,6 +102,7 @@ public class GameManagerDBImpl implements GameManager{
         Gadget gadget=new Gadget(idGadget,cost,description,unityShape);
         this.gadgetList.add(gadget);
         this.session.save(gadget);
+        logger.info("Gadget correctly added in DB.");
     }
 
     @Override
@@ -113,22 +112,21 @@ public class GameManagerDBImpl implements GameManager{
 
     @Override
     public void buyGadget(String idGadget, String idUser) throws NotEnoughMoneyException, GadgetDoesNotExistException, UserDoesNotExistException {
-        logger.info("buyGadget("+idGadget+", "+idUser+")");
+        logger.info("Starting buyGadget("+idGadget+", "+idUser+")");
 
         Gadget gadget = findGadget(idGadget);
         isGadgetNull(gadget);
         User user = findUser(idUser);
         isUserNull(user);
 
-        int money = user.getCoins();
-        int cost = gadget.getCost();
-        if (money < cost){
-            logger.warn(cost+" is not enough money");
+        try {
+            user.purchaseGadget(gadget);
+        } catch (NotEnoughMoneyException e) {
+            logger.warn("Not enough money exception");
             throw new NotEnoughMoneyException();
         }
-
         logger.info("Gadget bought");
-        this.users.get(idUser).setCoins(money-cost);
+        this.session.update(user);
 
         Purchase purchase= new Purchase(idUser,idGadget);
         this.session.save(purchase);
