@@ -1,10 +1,13 @@
 package edu.upc.dsa.models;
 
 
+import edu.upc.dsa.exceptions.IncorrectCredentialsException;
+import edu.upc.dsa.exceptions.NotEnoughMoneyException;
 import edu.upc.dsa.util.RandomUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class User {
     String idUser;
@@ -96,5 +99,17 @@ public class User {
 
     public void setCoins(Integer coins) {
         this.coins = coins;
+    }
+
+    public void purchaseGadget(Gadget gadget) throws NotEnoughMoneyException {
+        if(gadget.getCost()>this.coins){
+            throw new NotEnoughMoneyException();
+        }
+
+        this.coins = this.coins - gadget.getCost();
+    }
+
+    public Boolean validCredentials(Credentials credentials) {
+        return Objects.equals(this.email, credentials.getEmail()) && Objects.equals(this.password, credentials.getPassword());
     }
 }
