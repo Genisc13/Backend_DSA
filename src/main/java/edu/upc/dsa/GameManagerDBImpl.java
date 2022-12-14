@@ -45,8 +45,13 @@ public class GameManagerDBImpl implements GameManager{
     }
 
     @Override
-    public String addUser(String name, String surname, String date, String mail, String password) throws EmailAlreadyBeingUsedException {
-        User user = new User(name, surname, date, mail, password);
+    public String addUser(String name, String surname, String date, String email, String password) throws EmailAlreadyBeingUsedException {
+        User user = new User(name, surname, date, email, password);
+        for (User u : this.users.values()) {
+            if (Objects.equals(u.getEmail(), email)) {
+                throw new EmailAlreadyBeingUsedException();
+            }
+        }
         this.session.save(user);
         logger.info("User has been added correctly in DB with id "+user.getIdUser());
         return user.getIdUser();
