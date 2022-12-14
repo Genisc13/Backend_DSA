@@ -33,7 +33,7 @@
                         data: JSON.stringify({"email": userMail, "password": userPassword}),
                         dataType: 'text',
                         success: function (data) {
-                            var idUser = $.parseJSON(data);
+                            let idUser = $.parseJSON(data);
                             sessionStorage.setItem("idUser",idUser.idUser);
                             //localStorage.setItem("idUser",idUser.idUser)
 

@@ -126,7 +126,7 @@ form .txt_field{
 /* Float four columns side by side */
 .column {
     float: left;
-    width: 33%;
+    width: 33.3333%;
     padding: 0 5px;
 }
 
@@ -157,4 +157,3 @@ form .txt_field{
     text-align: center;
     background-color: #ff7500;
 }
-

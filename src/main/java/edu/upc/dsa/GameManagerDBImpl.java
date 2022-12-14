@@ -31,6 +31,7 @@ public class GameManagerDBImpl implements GameManager{
         this.gadgetList = new ArrayList<>();
         this.users = new HashMap<>();
         this.users = this.getUsers();
+        this.gadgetList = this.gadgetList();
     }
 
     @Override
@@ -66,6 +67,7 @@ public class GameManagerDBImpl implements GameManager{
     @Override
     public User getUser(String idUser) throws UserDoesNotExistException {
         logger.info("Identifier saved: "+idUser);
+        this.users = getUsers();
         User user = this.users.get(idUser);
         isUserNull(user);
         return user;
