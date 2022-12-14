@@ -90,6 +90,25 @@ public class GameService {
         catch (GadgetDoesNotExistException E){
             return Response.status(404).build();
         }
+    }
+    @GET
+    @ApiOperation(value = "Gives a User by id", notes = "With an id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = UserInformation.class),
+            @ApiResponse(code = 404, message = "User does not exist")
+    })
+    @Path("/user/{idUser}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUser(@PathParam("idUser") String id) {
+        try {
+            User user = this.tm.getUser(id);
+            //UserInformation info = new UserInformation(user.getName(), user.getSurname(), user.getBirthday(), user.getEmail(), user.getPassword());
+            UserInformation info = new UserInformation(user);
+            return Response.status(201).entity(info).build();
+        }
+        catch (UserDoesNotExistException E){
+            return Response.status(404).build();
+        }
 
     }
     @POST

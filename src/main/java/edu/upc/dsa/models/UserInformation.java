@@ -10,12 +10,6 @@ public class UserInformation {
     public UserInformation(){};
 
     public UserInformation(String name, String surname, String birthday, String email, String password){
-        this.name=name;
-        this.surname=surname;
-        this.birthday =birthday;
-        this.email =email;
-        this.password=password;
-
         this.setName(name);
         this.setSurname(surname);
         this.setBirthday(birthday);
@@ -23,6 +17,15 @@ public class UserInformation {
         this.setPassword(password);
 
     }
+
+    public UserInformation(User u){
+        this.setName(u.getName());
+        this.setSurname(u.getSurname());
+        this.setBirthday(u.getBirthday());
+        this.setEmail(u.getEmail());
+        this.setPassword(u.getPassword());
+    }
+
 
     public void setName(String name) {
         this.name = name;

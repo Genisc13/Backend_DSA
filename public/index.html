@@ -7,6 +7,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>THE MAZE OF ROOMS</title>
+    <style>
+        body{
+            background-image: url('DSC_0423_edited.JPG');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+    }</style>
+    <script type="module">
+        sessionStorage.clear();
+    </script>
     <script>
         $(document).ready(function(){
             $("#loginButton").click(function(){
@@ -23,10 +33,9 @@
                         data: JSON.stringify({"email": userMail, "password": userPassword}),
                         dataType: 'text',
                         success: function (data) {
-                            alert(data)
                             var idUser = $.parseJSON(data);
-                            //alert("HEY "+idUser.idUser);
-                            localStorage.setItem('idUser',idUser.idUser);
+                            sessionStorage.setItem("idUser",idUser.idUser);
+                            //localStorage.setItem("idUser",idUser.idUser)
 
                             $(location).attr('href', "GadgetActions.html");
                         },
@@ -49,14 +58,23 @@
         <div class="form-content">
             <form>
                 <div class="input-group" style="margin: auto; width: 50%; padding-top: 15px">
-                    <label for="userEmail">Email</label>
-                    <input type="text" class="form-control" id="userEmail"><br>
-                    <label for="userPassword">Password</label>
-                    <input type="password" class="form-control" id="userPassword"><br>
+                    <div class="txt_field">
+                        <input type="text" required id="userEmail">
+                        <span></span>
+                        <label>Email</label>
+                    </div>
+                    <div class="txt_field">
+                        <input type="password" required id="userPassword">
+                        <span></span>
+                        <label>Password</label>
+                    </div>
                 </div>
                 <div class="form-group" style="margin: auto; width: 50%">
                     <button type="button" class="btn btn-block btn-warning" id="loginButton">Login</button>
-                    <p>You don't have an account?<a href="Register.html"> Sign up!</a> </p>
+
+                    <div class="signup_link">
+                        You don't have an account? <a href="Register.html">Sign up!</a>
+                    </div>
                 </div>
             </form>
         </div>

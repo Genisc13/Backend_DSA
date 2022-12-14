@@ -8,7 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>THE MAZE OF ROOMS</title>
-
+    <style>
+        body{
+            background-image: url('DSC_0434.JPG');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }</style>
     <script>
         $(document).ready(function(){
             $("#registerButton").click(function(){
@@ -50,17 +56,32 @@
     </div>
     <div class="form-content">
         <form>
-            <div class="input-group text-center" style="margin: auto; width: 50%; padding-top: 15px">
-                <label for="userName">Name</label>
-                <input type="text" class="form-control" id="userName"><br>
-                <label for="surname">Surname</label>
-                <input type="text" class="form-control" id="surname"><br>
-                <label for="birthday">Birthday</label>
-                <input type="text" class="form-control" id="birthday"><br>
-                <label for="userEmail">Email</label>
-                <input type="text" class="form-control" id="userEmail"><br>
-                <label for="userPassword">Password</label>
-                <input type="password" class="form-control" id="userPassword"><br>
+            <div class="input-group text-center" style="margin: auto; width: 50%; padding-top: 10px; padding-bottom: 10px">
+                <div class="txt_field">
+                    <input type="text" required id="userName">
+                    <span></span>
+                    <label>Name</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" required id="surname">
+                    <span></span>
+                    <label>Surname</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" required id="birthday">
+                    <span></span>
+                    <label>Birthday</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" required id="userEmail">
+                    <span></span>
+                    <label>Email</label>
+                </div>
+                <div class="txt_field">
+                    <input type="text" required id="userPassword">
+                    <span></span>
+                    <label>Password</label>
+                </div>
                 <button type="button" class="btn btn-block btn-warning" id="registerButton">Accept</button>
             </div>
         </form>

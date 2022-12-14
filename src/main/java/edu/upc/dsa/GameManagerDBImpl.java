@@ -62,6 +62,22 @@ public class GameManagerDBImpl implements GameManager{
     }
 
     @Override
+    public User getUser(String idUser) throws UserDoesNotExistException {
+        logger.info("Identifier saved: "+idUser);
+
+        List<Object> usersList = this.session.findAll(User.class);
+        for(Object user : usersList) {
+            User u = (User) user;
+            if(Objects.equals(u.getIdUser(), idUser)) {
+                logger.info("User "+u.getName()+" has idUser = "+idUser);
+                return u;
+            }
+        }
+        logger.warn("Identifier not found");
+        throw new UserDoesNotExistException();
+    }
+
+    @Override
     public String userLogin(Credentials credentials) throws IncorrectCredentialsException {
         List<Object> usersList = this.session.findAll(User.class);
         for(Object user : usersList) {

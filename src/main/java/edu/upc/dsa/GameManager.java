@@ -12,6 +12,7 @@ public interface GameManager {
     public int numGadgets();
     public String addUser(String name, String surname, String date, String mail, String password) throws EmailAlreadyBeingUsedException;
     public Map<String, User> getUsers();
+    public User getUser(String idUser) throws UserDoesNotExistException;
     public String userLogin(Credentials credentials) throws IncorrectCredentialsException;
     public List<Gadget> gadgetList();
     public void addGadget(String idGadget, int cost, String description, String unityShape);

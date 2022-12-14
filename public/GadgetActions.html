@@ -6,14 +6,38 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <script type="module">
+        let idUser = sessionStorage.getItem('idUser');
+        //alert("Es comprova id user al entrar al registre: "+idUser);
+
+        if (idUser==null){
+            $(location).attr('href', "index.html");
+        }
+        $.ajax({
+            contentType: "application/json",
+            type: 'GET',
+            url: '/dsaApp/shop/user/'+idUser,
+            //data: { get_param: 'value'},
+            dataType: 'text',
+            success: function (data) {
+                var UserInformation = $.parseJSON(data);
+                sessionStorage.setItem("name",UserInformation.name);
+                sessionStorage.setItem("surname",UserInformation.surname);
+                //sessionStorage.setItem("idUserSession",idUser)
+                //alert("El nom es: "+UserInformation.name+" "+UserInformation.surname)
+                $("#welcome").text(sessionStorage.getItem('name')+ " you are in the GADGET'S SHOP");
+                $("#userchip").append(sessionStorage.getItem('name')+ ' '+sessionStorage.getItem('surname'));
+            },
+            error: function (json) {
+                alert("Wrong idUser!");
+            }
+        })
+    </script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>THE MAZE OF ROOMS</title>
-
     <script>
-        const idUser = localStorage.getItem('idUser');
-        alert("eis coleguis: "+idUser);
-
         $(document).ready(function(){
             $("#buyButton").click(function(){
                 $.ajax({
@@ -37,11 +61,10 @@
                     data: { get_param: 'value'},
                     dataType: 'text',
                     success: function(data){
-
                         var json = $.parseJSON(data);
-                        $('#return message').text(json);
 
                         for(i=0; i<json.length; i++){
+                            
                             $('#listGadgets').append('<tr><td>'+json[i].id+'</td><td>'+json[i].description+'</td><td>'+json[i].cost+'</td></tr>');
                         }
                     }
@@ -55,20 +78,32 @@
 </head>
 
 <body>
+    <div class="chip" id="userchip">
+        <img src="avatar.jpg" alt="Person" width="96" height="96">
+    </div>
 
     <div class="cod-container" style="margin: auto; width: 50%">
-        <h3> GADGET'S SHOP </h3>
+        <div class="form-header">
+            <h1 id="welcome"></h1>
+        </div>
         <div class="input-group"style="margin: auto; width: 50%">
             <p>Buy a gadget:</p>
             <label for="idGadget"></label><input type="text" class="form-control" id="idGadget" value=""><br>
-            <label for="idUser"></label><input type="text" class="form-control" id="idUser" value=""><br>
             <button type="button" class="btn btn-block btn-warning" id="buyButton" value="Buy a gadget"></button>
 
         </div>
         <div class="text-center" id="return message"><b></b></div><br>
-        <div class="text-center"><b>Get the gadget list:</b></div><br>
-        <button type="button" class="btn btn-block btn-warning" id="listButton" value="Get the list"></button>
+
+        <button type="button" class="btn btn-block btn-warning" id="listButton">Get the gadget's list</button>
         <div class="text-center" id="return message list"><b></b></div><br>
+        <div class="row">
+            <div class="column">
+                <div class="card">
+                    <p>Some text</p>
+                </div>
+            </div>
+        </div>
+
         <table class="Repositories table">
             <tr>
                 <th>Id of the gadget</th>
@@ -79,4 +114,4 @@
             </tbody>
         </table>
     </div>
-</bo
+</body>

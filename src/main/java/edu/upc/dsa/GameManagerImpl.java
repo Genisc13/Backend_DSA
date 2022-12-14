@@ -57,6 +57,16 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
+    public User getUser(String idUser) throws UserDoesNotExistException {
+        User u = users.get(idUser);
+        if (u==null) {
+            logger.warn("Identifier not found");
+            throw new UserDoesNotExistException();
+        }
+        return u;
+    }
+
+    @Override
     public String userLogin(Credentials credentials) throws IncorrectCredentialsException {
         if (!equalCredentials(credentials)) {
             logger.warn("Credentials " + credentials.getEmail() + " and "+credentials.getPassword()+  " not found");
