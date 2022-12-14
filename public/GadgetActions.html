@@ -74,14 +74,38 @@
                         var htmlLine;
 
                         if(json.length>0) {
-                            htmlLine='<div class="row"><div class="column"><div class="card"><p>'+json[0].description+'</p><p>'+json[0].cost+'</p></div></div>\n';
+                            htmlLine='<div class="row">' +
+                                '<div class="column">' +
+                                '<div class="card">' +
+                                '<img src="AvatarGenis.png" alt="Avatar" style="width:100%">' +
+                                '<div class="container">' +
+                                '<h2><b>'+json[0].description+'</b></h2><p>'+json[0].cost+'</p>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>';
 
                             for (i = 1; i < json.length; i++) {
                                 if (i % 3 == 0) {
-                                    htmlLine+='</div>\n' + '<div class="row"><div class="column"><div class="card"><p>'+json[i].description+'</p><p>'+json[i].cost+'</p></div></div>\n';
-                                } else{
+                                    htmlLine+='</div>' +
+                                        '<div class="row">' +
+                                        '<div class="column">' +
+                                        '<div class="card">' +
+                                        '<img src="AvatarGuillem.png" alt="Avatar" style="width:100%">' +
+                                        '<div class="container">' +
+                                        '<h2><b>'+json[i].description+'</b></h2><p>'+json[i].cost+'</p>' +
+                                        '</div>'+
+                                        '</div>' +
+                                        '</div>';
+                                } else {
                                     //$('#listGadgets').append('<tr><td>'+json[i].id+'</td><td>'+json[i].description+'</td><td>'+json[i].cost+'</td></tr>');
-                                    htmlLine+='<div class="row"><div class="column"><div class="card"><p>'+json[i].description+'</p><p>'+json[i].cost+'</p></div></div>\n';
+                                    htmlLine += '<div class="column">' +
+                                        '<div class="card">' +
+                                        '<img src="AvatarPaula.png" alt="Avatar" style="width:100%">' +
+                                        '<div class="container">' +
+                                        '<h2><b>' + json[i].description + '</b></h2><p>' + json[i].cost + '</p>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>';
                                 }
                             }
                             htmlLine = htmlLine+'</div>'
@@ -116,9 +140,8 @@
 
         <button type="button" class="btn btn-block btn-warning" id="listButton">Get the gadget's list</button>
         <div class="text-center" id="return message list"><b></b></div><br>
-        <div id="gadgetsCards">
 
-        </div>
+        <div id="gadgetsCards"></div>
 
     </div>
 </body>
