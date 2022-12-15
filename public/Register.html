@@ -10,12 +10,24 @@
     <title>THE MAZE OF ROOMS</title>
     <style>
         body{
-            background-image: url('DSC_0434.JPG');
+            background-image: url('Fondo1.png');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
-        }</style>
+        }
+    </style>
+
+    <script type="text/javascript" >
+        function preventBack(){window.history.forward();}
+        setTimeout("preventBack()", 0);
+        window.onunload=function(){null};
+    </script>
     <script>
+
+        function returnNow() {
+            $(location).attr('href', "index.html");
+        }
+
         $(document).ready(function(){
             $("#registerButton").click(function(){
                 var name=$("#userName").val();
@@ -48,7 +60,7 @@
     </script>
 </head>
 <body>
-<div class="cod-container" style="margin: auto; width: 50%">
+<div class="cod-container" style="margin: auto; width: 400px">
     <div class="form-header">
         <h1>
             Register
@@ -56,7 +68,7 @@
     </div>
     <div class="form-content">
         <form>
-            <div class="input-group text-center" style="margin: auto; width: 50%; padding-top: 10px; padding-bottom: 10px">
+            <div class="input-group text-center" style="margin: auto; width: 80%; padding-top: 10px; padding-bottom: 10px">
                 <div class="txt_field">
                     <input type="text" required id="userName">
                     <span></span>
@@ -82,7 +94,10 @@
                     <span></span>
                     <label>Password</label>
                 </div>
-                <button type="button" class="btn btn-block btn-warning" id="registerButton">Accept</button>
+                <button type="button" class="btn btn-block btn-warning" id="registerButton">Accept</button><br>
+
+                <button onclick="returnNow()" type="button" class="btn btn-info" id="return">Return</button>
+
             </div>
         </form>
     </div>
