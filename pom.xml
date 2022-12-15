@@ -104,6 +104,39 @@
                     <mainClass>edu.upc.dsa.Main</mainClass>
                 </configuration>
             </plugin>
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>create-Database</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <path id="DBsetup.classpath">
+                                    <path refid="maven.compile.classpath"/>
+                                </path>
+                                <sql
+                                        driver="org.DBsetup.driver"
+                                        url="jdbc:mariadb://localhost:3306/rooms"
+                                        userid="rooms"
+                                        password="rooms"
+                                        autocommit="true"
+                                        oneerror="continue">
+                                    <classpath>
+                                        <path refid="DBsetup.classpath"/>
+                                    </classpath>
+                                    <fileset file="${basedir}/etc/DBsetup.sql"/>
+                                </sql>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
