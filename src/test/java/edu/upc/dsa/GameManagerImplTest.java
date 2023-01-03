@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class GameManagerImplTest {
@@ -21,7 +22,7 @@ public class GameManagerImplTest {
     String idGuillem;
 
     @Before
-    public void setUp() throws EmailAlreadyBeingUsedException {
+    public void setUp() throws EmailAlreadyBeingUsedException, SQLException {
         gameManager = new GameManagerImpl();
         this.idAlba= gameManager.addUser("Alba","Roma", "23112001","albaroma@gmail.com","Test123");
         this.idPaula= gameManager.addUser( "Paula","Sopena", "22052001","paulasopena@gmail.com","Test123");
@@ -46,7 +47,7 @@ public class GameManagerImplTest {
     }
 
     @Test
-    public void testAddUserIsPossible() throws EmailAlreadyBeingUsedException {
+    public void testAddUserIsPossible() throws EmailAlreadyBeingUsedException, SQLException {
         Assert.assertEquals(5, this.gameManager.numUsers());
         this.gameManager.addUser("test", "test", "test", "susana@gmail.com", "test");
         Assert.assertEquals(6, this.gameManager.numUsers());
@@ -97,7 +98,7 @@ public class GameManagerImplTest {
         Assert.assertEquals("Test123",userList.get(idGuillem).getPassword());
     }
     @Test
-    public void testLoginIsPossible() throws IncorrectCredentialsException {
+    public void testLoginIsPossible() throws IncorrectCredentialsException, SQLException {
         Map<String,User> userList = this.gameManager.getUsers();
         Assert.assertEquals("guillempurti@gmail.com",userList.get(idGuillem).getEmail());
         Assert.assertEquals("Test123",userList.get(idGuillem).getPassword());
@@ -123,7 +124,7 @@ public class GameManagerImplTest {
     @Test
     public void testDeleteGadgetIsPossible() throws GadgetDoesNotExistException{
         List<Gadget> gadgetList = this.gameManager.gadgetList();
-        Gadget eliminado = this.gameManager.deleteGadget("2A");
+        Object eliminado = this.gameManager.deleteGadget("2A");
         Assert.assertEquals(2,gadgetList.size());
         Assert.assertEquals("2A",eliminado.getIdGadget());
         Assert.assertEquals("1A",gadgetList.get(0).getIdGadget());
@@ -136,7 +137,7 @@ public class GameManagerImplTest {
     @Test
     public void testGetGadgetIsPossible() throws GadgetDoesNotExistException{
         List<Gadget> gadgetList = this.gameManager.gadgetList();
-        Gadget recogido=this.gameManager.getGadget("2A");
+        Gadget recogido= (Gadget) this.gameManager.getGadget("2A");
         Assert.assertEquals("2A",gadgetList.get(0).getIdGadget());
         Assert.assertEquals("2A",recogido.getIdGadget());
 
@@ -145,8 +146,4 @@ public class GameManagerImplTest {
     public void testGetGadgetDoesNotExist(){
         Assert.assertThrows(GadgetDoesNotExistException.class, ()-> this.gameManager.getGadget("2B"));
     }
-
-
-
-
 }

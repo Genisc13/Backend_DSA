@@ -1,5 +1,7 @@
 package edu.upc.dsa.models;
 
+import java.util.List;
+
 public class UserInformation {
     String name;
     String surname;

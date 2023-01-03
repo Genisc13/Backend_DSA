@@ -14,6 +14,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +27,7 @@ public class GameService {
     private GameManager tm;
     final static org.apache.log4j.Logger logger = Logger.getLogger(GameManagerDBImpl.class);
 
-    public GameService() throws EmailAlreadyBeingUsedException {
+    public GameService() throws EmailAlreadyBeingUsedException, SQLException {
         this.tm = GameManagerDBImpl.getInstance();
         if (tm.numUsers()==0) {
             this.tm.addUser("Alba", "Roma", "23112001", "albaroma@gmail.com", "123456");
@@ -85,7 +86,7 @@ public class GameService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getGadget(@PathParam("idGadget") String id) {
         try {
-            Gadget gadget = this.tm.getGadget(id);
+            Object gadget = this.tm.getGadget(id);
             return Response.status(201).entity(gadget).build();
         }
         catch (GadgetDoesNotExistException E){
@@ -127,7 +128,7 @@ public class GameService {
             this.tm.addUser(newUser.getName(), newUser.getSurname(), newUser.getBirthday(), newUser.getEmail(), newUser.getPassword());
             return Response.status(201).entity(newUser).build();
         }
-        catch (EmailAlreadyBeingUsedException E){
+        catch (EmailAlreadyBeingUsedException | SQLException E){
             return Response.status(409).entity(newUser).build();
         }
 
@@ -148,7 +149,7 @@ public class GameService {
             UserId idUser = new UserId(id);
             return Response.status(201).entity(idUser).build();
         }
-        catch (IncorrectCredentialsException E){
+        catch (IncorrectCredentialsException | SQLException E){
             return Response.status(409).build();
         }
     }
