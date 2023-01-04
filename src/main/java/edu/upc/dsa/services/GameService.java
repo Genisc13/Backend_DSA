@@ -230,5 +230,26 @@ public class GameService {
             return Response.status(401).build();
         }
     }
+
+    @GET
+    @ApiOperation(value = "Gives the purchases of a user")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = String.class, responseContainer="List"),
+            @ApiResponse(code = 404, message = "No purchase found for that user")
+    })
+    @Path("/purchase/{idUser}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response purchasedGadgets(@PathParam("idUser") String idUser) {
+        logger.info("Seeing the purchased gadgets by a user");
+        try {
+            List<String> listgadgets= new ArrayList<>(this.tm.purchasedGadgets(idUser));
+            GenericEntity<List<String>> entity = new GenericEntity<List<String>>(listgadgets) {};
+            return Response.status(201).entity(entity).build();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (NoPurchaseWasFoundForIdUser e) {
+            return Response.status(401).build();
+        }
+    }
 }
 
