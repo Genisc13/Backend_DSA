@@ -27,21 +27,21 @@ public class GameService {
     private GameManager tm;
     final static org.apache.log4j.Logger logger = Logger.getLogger(GameManagerDBImpl.class);
 
-    public GameService() throws EmailAlreadyBeingUsedException, SQLException {
+    public GameService() throws EmailAlreadyBeingUsedException, SQLException, GadgetWithSameIdAlreadyExists {
         this.tm = GameManagerDBImpl.getInstance();
         logger.info("Hey im here using the service");
 
-        //if (tm.numUsers()==0) {
+        if (tm.numUsers()==0) {
             this.tm.addUser("Alba", "Roma", "23112001", "albaroma@gmail.com", "123456");
             this.tm.addUser("Maria", "Ubiergo", "02112001", "meri@gmail.com", "123456");
             this.tm.addUser("Guillem", "Purti", "02112001", "guille@gmail.com", "123456");
-        //}
-        //if(tm.numGadgets()==0) {
+        }
+        if(tm.numGadgets()==0) {
             this.tm.addGadget("1",3,"Ojo volador","afewifp");
             this.tm.addGadget("2",8,"Espada sin filo","afeoejifp");
             this.tm.addGadget("3",550,"Caminacielos","afeoejep");
             this.tm.addGadget("4",2,"Percha sonica","afeoe");
-        //}
+        }
     }
     @GET
     @ApiOperation(value = "Gives the shop gadgets", notes = "ordered by price")
@@ -168,7 +168,7 @@ public class GameService {
         if (newGadget.getIdGadget()==null || newGadget.getCost()<0 || newGadget.getDescription()==null || newGadget.getUnityShape()==null)  return Response.status(500).entity(newGadget).build();
         try {
             this.tm.addGadget(newGadget.getIdGadget(),newGadget.getCost(),newGadget.getDescription(),newGadget.getUnityShape());
-        } catch (SQLException e) {
+        } catch (SQLException | GadgetWithSameIdAlreadyExists e) {
             throw new RuntimeException(e);
         }
         return Response.status(201).entity(newGadget).build();

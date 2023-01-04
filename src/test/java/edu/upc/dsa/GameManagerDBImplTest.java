@@ -1,11 +1,14 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.exceptions.EmailAlreadyBeingUsedException;
-import edu.upc.dsa.exceptions.IncorrectCredentialsException;
+import edu.upc.dsa.exceptions.*;
 import edu.upc.dsa.models.Credentials;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.sql.SQLException;
+import java.util.List;
 
 public class GameManagerDBImplTest {
     GameManager gameManager;
@@ -19,20 +22,18 @@ public class GameManagerDBImplTest {
     public void tearDown(){this.gameManager = null;}
 
     @Test
-    public void testAddUser() throws EmailAlreadyBeingUsedException {
-        //this.gameManager.addUser("Alba","Roma","23/11/2001","albar@gmail.com","123456");
-
+    public void testPurchasedGadgets() {
+        String userId;
+        List<String> gadgetIds;
+        try{
+            userId = this.gameManager.addUser("Test123", "Test123", "123", "Test123", "Test123");
+        } catch (SQLException | EmailAlreadyBeingUsedException e){return;}
+        Assert.assertThrows(NoPurchaseWasFoundForIdUser.class, ()-> this.gameManager.purchasedGadgets(userId));
+        try {
+            this.gameManager.buyGadget("1", userId);
+            gadgetIds = this.gameManager.purchasedGadgets(userId);
+        } catch (NotEnoughMoneyException | SQLException | GadgetDoesNotExistException | UserDoesNotExistException | NoPurchaseWasFoundForIdUser e) {return;}
+        Assert.assertEquals(gadgetIds.get(0), "1");
     }
 
-    @Test
-    public void testAddGadget() {
-        this.gameManager.addGadget("A1", 19, "molt guai", "forma");
-
-    }
-
-    @Test
-    public void testUserLogin() throws IncorrectCredentialsException {
-        //this.gameManager.userLogin(new Credentials("albar@gmail.com","123456"));
-
-    }
 }

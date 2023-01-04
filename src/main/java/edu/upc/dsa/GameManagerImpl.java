@@ -191,4 +191,9 @@ public class GameManagerImpl implements GameManager {
         this.gadgetList.remove(t);
         return t;
     }
+
+    @Override
+    public List<String> purchasedGadgets(String idUser) {
+        return null;
+    }
 }
