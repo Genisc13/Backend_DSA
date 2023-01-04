@@ -68,7 +68,7 @@
             <artifactId>crud</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/src/main/resources/CRUD-1.0.jar</systemPath>
+            <systemPath>${project.basedir}/src/main/resources/CRUD-1.0-vers2.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>

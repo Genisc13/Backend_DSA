@@ -16,9 +16,9 @@ public interface GameManager {
     public User getUser(String idUser) throws UserDoesNotExistException;
     public String userLogin(Credentials credentials) throws IncorrectCredentialsException, SQLException;
     public List<Gadget> gadgetList();
-    public void addGadget(String idGadget, int cost, String description, String unityShape);
-    public void updateGadget(Gadget gadget) throws GadgetDoesNotExistException;
-    public void buyGadget(String idGadget, String idUser) throws NotEnoughMoneyException, GadgetDoesNotExistException, UserDoesNotExistException;
+    public void addGadget(String idGadget, int cost, String description, String unityShape) throws SQLException;
+    public void updateGadget(Gadget gadget) throws GadgetDoesNotExistException, SQLException;
+    public void buyGadget(String idGadget, String idUser) throws NotEnoughMoneyException, GadgetDoesNotExistException, UserDoesNotExistException, SQLException;
     public Object getGadget(String id) throws GadgetDoesNotExistException;
     public Object deleteGadget(String id) throws GadgetDoesNotExistException;
 

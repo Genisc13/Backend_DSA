@@ -1,12 +1,13 @@
 package edu.upc.dsa;
 
+//import arg.crud.*;
 import edu.upc.eetac.dsa.FactorySession;
+import edu.upc.eetac.dsa.Session;
 import edu.upc.dsa.exceptions.*;
 import edu.upc.dsa.models.Credentials;
 import edu.upc.dsa.models.Gadget;
 import edu.upc.dsa.models.Purchase;
 import edu.upc.dsa.models.User;
-import edu.upc.eetac.dsa.Session;
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
@@ -17,20 +18,16 @@ import static java.lang.Integer.parseInt;
 public class GameManagerDBImpl implements GameManager{
     Session session;
     private static GameManager instance;
-    final static Logger logger = Logger.getLogger(GameManagerImpl.class);
-    List<Object> gadgetList;
-    Map<String, User> users;
+    final static Logger logger = Logger.getLogger(GameManagerDBImpl.class);
 
     public static GameManager getInstance() {
+        logger.info("Hey im here making the instance of the db implementation");
         if (instance==null) instance = new GameManagerDBImpl();
         return instance;
     }
 
     public GameManagerDBImpl(){
         this.session = FactorySession.openSession("jdbc:mariadb://localhost:3306/rooms","rooms", "rooms");
-        this.gadgetList = new ArrayList<Object>();
-        this.users = new HashMap<>();
-        this.users = this.getUsers();
     }
 
     @Override
@@ -46,32 +43,35 @@ public class GameManagerDBImpl implements GameManager{
     @Override
     public String addUser(String name, String surname, String date, String email, String password) throws EmailAlreadyBeingUsedException, SQLException {
         User user = new User(name, surname, date, email, password);
-        User userMatch = (User) this.session.get(User.class, "email", email);
-        try {
-            isUserNull(userMatch);
-            throw new EmailAlreadyBeingUsedException();
-        } catch (UserDoesNotExistException e) {
+        try{
+            User userMatch = (User) this.session.get(User.class, "email", email);
+        }
+        catch(SQLException e){
             this.session.save(user);
             logger.info("User has been added correctly in DB with id "+user.getIdUser());
             return user.getIdUser();
+
         }
+        throw new EmailAlreadyBeingUsedException();
     }
 
     @Override
     public Map<String, User> getUsers() {
+        logger.info("Arrived to getUsers");
         List<Object> usersList= this.session.findAll(User.class);
+        HashMap<String, User> users = new HashMap<>();
         for(int i=0; i<usersList.size();i++) {
             User user = (User) usersList.get(i);
-            this.users.put(user.getIdUser(), user);
+            users.put(user.getIdUser(), user);
         }
         logger.info("User list has been created correctly its size is: "+usersList.size());
-        return this.users;
+        return users;
     }
 
     @Override
     public User getUser(String idUser) throws UserDoesNotExistException {
         logger.info("Identifier saved: "+idUser);
-        User user = (User) this.session.get(User.class, parseInt(idUser));
+        User user = (User) this.session.get(User.class, (idUser));
         isUserNull(user);
         return user;
     }
@@ -93,7 +93,6 @@ public class GameManagerDBImpl implements GameManager{
 
         logger.info("Incorrect credentials, try again.");
         throw new IncorrectCredentialsException();
-
     }
 
     @Override
@@ -103,24 +102,24 @@ public class GameManagerDBImpl implements GameManager{
         for (Object o : gadgets){
             res.add((Gadget) o);
         }
-        logger.info("The list of gadgets has a size of "+this.gadgetList.size());
+        logger.info("The list of gadgets has a size of "+res.size());
         return res;
     }
 
     @Override
-    public void addGadget(String idGadget, int cost, String description, String unityShape) {
+    public void addGadget(String idGadget, int cost, String description, String unityShape) throws SQLException {
         Gadget gadget=new Gadget(idGadget,cost,description,unityShape);
         this.session.save(gadget);
         logger.info("Gadget correctly added in DB.");
     }
 
     @Override
-    public void updateGadget(Gadget gadget) throws GadgetDoesNotExistException {
+    public void updateGadget(Gadget gadget) throws GadgetDoesNotExistException, SQLException {
         this.session.update(gadget);
     }
 
     @Override
-    public void buyGadget(String idGadget, String idUser) throws NotEnoughMoneyException, GadgetDoesNotExistException, UserDoesNotExistException {
+    public void buyGadget(String idGadget, String idUser) throws NotEnoughMoneyException, GadgetDoesNotExistException, UserDoesNotExistException, SQLException {
         logger.info("Starting buyGadget("+idGadget+", "+idUser+")");
 
         Gadget gadget = getGadget(idGadget);
@@ -141,26 +140,27 @@ public class GameManagerDBImpl implements GameManager{
 
     @Override
     public Gadget getGadget(String id) throws GadgetDoesNotExistException {
-        Gadget gadget = (Gadget) this.session.get(Gadget.class, parseInt(id));
+        Gadget gadget = (Gadget) this.session.get(Gadget.class, (id));
         isGadgetNull(gadget);
         return gadget;
     }
 
     @Override
     public Gadget deleteGadget(String id) throws GadgetDoesNotExistException {
-        Gadget gadget = (Gadget) this.session.get(Gadget.class, parseInt(id));
+        Gadget gadget = (Gadget) this.session.get(Gadget.class, (id));
         isGadgetNull(gadget);
         this.session.delete(gadget);
         return gadget;
+
     }
 
     public Gadget findGadget(String idGadget) {
-        Gadget gadget = (Gadget) this.session.get(Gadget.class, parseInt(idGadget));
+        Gadget gadget = (Gadget) this.session.get(Gadget.class, (idGadget));
         return gadget;
     }
 
     public User findUser(String userIdName) {
-        User user = (User) this.session.get(User.class, parseInt(userIdName));
+        User user = (User) this.session.get(User.class, (userIdName));
         return user;
     }
 

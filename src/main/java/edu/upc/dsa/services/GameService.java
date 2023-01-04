@@ -29,17 +29,19 @@ public class GameService {
 
     public GameService() throws EmailAlreadyBeingUsedException, SQLException {
         this.tm = GameManagerDBImpl.getInstance();
-        if (tm.numUsers()==0) {
+        logger.info("Hey im here using the service");
+
+        //if (tm.numUsers()==0) {
             this.tm.addUser("Alba", "Roma", "23112001", "albaroma@gmail.com", "123456");
             this.tm.addUser("Maria", "Ubiergo", "02112001", "meri@gmail.com", "123456");
             this.tm.addUser("Guillem", "Purti", "02112001", "guille@gmail.com", "123456");
-        }
-        if(tm.numGadgets()==0) {
+        //}
+        //if(tm.numGadgets()==0) {
             this.tm.addGadget("1",3,"Ojo volador","afewifp");
             this.tm.addGadget("2",8,"Espada sin filo","afeoejifp");
             this.tm.addGadget("3",550,"Caminacielos","afeoejep");
             this.tm.addGadget("4",2,"Percha sonica","afeoe");
-        }
+        //}
     }
     @GET
     @ApiOperation(value = "Gives the shop gadgets", notes = "ordered by price")
@@ -63,6 +65,7 @@ public class GameService {
     @Path("/user")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsers() {
+        logger.info("Arrived to the service");
         List<User> listUsers= new ArrayList<>(this.tm.getUsers().values());
         GenericEntity<List<User>> entity = new GenericEntity<List<User>>(listUsers) {};
         return Response.status(201).entity(entity).build();
@@ -163,7 +166,11 @@ public class GameService {
     @Consumes({MediaType.APPLICATION_JSON})
     public Response newGadget(Gadget newGadget){
         if (newGadget.getIdGadget()==null || newGadget.getCost()<0 || newGadget.getDescription()==null || newGadget.getUnityShape()==null)  return Response.status(500).entity(newGadget).build();
-        this.tm.addGadget(newGadget.getIdGadget(),newGadget.getCost(),newGadget.getDescription(),newGadget.getUnityShape());
+        try {
+            this.tm.addGadget(newGadget.getIdGadget(),newGadget.getCost(),newGadget.getDescription(),newGadget.getUnityShape());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return Response.status(201).entity(newGadget).build();
     }
     @PUT
@@ -187,7 +194,7 @@ public class GameService {
         catch (GadgetDoesNotExistException e) {
             return Response.status(401).build();
         }
-        catch (UserDoesNotExistException e) {
+        catch (UserDoesNotExistException | SQLException e) {
             return Response.status(409).build();
         }
     }
@@ -203,7 +210,7 @@ public class GameService {
             this.tm.updateGadget(gadget);
             return Response.status(201).build();
         }
-        catch (GadgetDoesNotExistException e) {
+        catch (GadgetDoesNotExistException | SQLException e) {
             return Response.status(401).build();
         }
     }
