@@ -242,13 +242,13 @@ public class GameService {
     public Response purchasedGadgets(@PathParam("idUser") String idUser) {
         logger.info("Seeing the purchased gadgets by a user");
         try {
-            List<String> listgadgets= new ArrayList<>(this.tm.purchasedGadgets(idUser));
+            List<String> listgadgets= this.tm.purchasedGadgets(idUser);
             GenericEntity<List<String>> entity = new GenericEntity<List<String>>(listgadgets) {};
             return Response.status(201).entity(entity).build();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (NoPurchaseWasFoundForIdUser e) {
-            return Response.status(401).build();
+            return Response.status(404).build();
         }
     }
 }
