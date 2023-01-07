@@ -176,23 +176,27 @@ public class GameManagerDBImpl implements GameManager{
     }
 
     @Override
-    public List<String> purchasedGadgets(String idUser) throws SQLException, NoPurchaseWasFoundForIdUser {
+    public List<Gadget> purchasedGadgets(String idUser) throws SQLException, NoPurchaseWasFoundForIdUser, GadgetDoesNotExistException {
         logger.info("Looking for gadgets purchased by user with id: " + idUser);
         HashMap<String, String> user = new HashMap<>();
         user.put("idUser", idUser);
 
         List<Object> purchaseMatch = this.session.findAll(Purchase.class, user);
-        List<String> idGadgets = new ArrayList<>();
+        List<Gadget> gadgetsOfUser=new ArrayList<>();
 
         if (purchaseMatch.size()!=0){
             logger.info("Purchase were found correctly for given user id!");
             for(Object object : purchaseMatch) {
                 Purchase purchase = (Purchase) object;
-                idGadgets.add(purchase.getIdGadget());
+                try{
+                    gadgetsOfUser.add(this.getGadget(purchase.getIdGadget()));
+                }
+                catch(Exception e){
+                    throw new GadgetDoesNotExistException();
+                }
             }
-            return idGadgets;
+            return gadgetsOfUser;
         }
-
         logger.info("No purchase was found for given user id");
         throw new NoPurchaseWasFoundForIdUser();
     }

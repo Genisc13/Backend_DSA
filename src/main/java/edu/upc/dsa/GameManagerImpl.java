@@ -193,7 +193,7 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public List<String> purchasedGadgets(String idUser) {
+    public List<Gadget> purchasedGadgets(String idUser) {
         return null;
     }
 }

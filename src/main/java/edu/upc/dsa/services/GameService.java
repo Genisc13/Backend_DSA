@@ -89,7 +89,7 @@ public class GameService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getGadget(@PathParam("idGadget") String id) {
         try {
-            Object gadget = this.tm.getGadget(id);
+            Gadget gadget = (Gadget) this.tm.getGadget(id);
             return Response.status(201).entity(gadget).build();
         }
         catch (GadgetDoesNotExistException E){
@@ -235,20 +235,23 @@ public class GameService {
     @ApiOperation(value = "Gives the purchases of a user")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = String.class, responseContainer="List"),
-            @ApiResponse(code = 404, message = "No purchase found for that user")
+            @ApiResponse(code = 404, message = "No purchase found for that user"),
+            @ApiResponse(code = 500, message = "Error in the databases")
     })
     @Path("/purchase/{idUser}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response purchasedGadgets(@PathParam("idUser") String idUser) {
         logger.info("Seeing the purchased gadgets by a user");
         try {
-            List<String> listgadgets= this.tm.purchasedGadgets(idUser);
-            GenericEntity<List<String>> entity = new GenericEntity<List<String>>(listgadgets) {};
+            List<Gadget> listGadgets= this.tm.purchasedGadgets(idUser);
+            GenericEntity<List<Gadget>> entity = new GenericEntity<List<Gadget>>(listGadgets) {};
             return Response.status(201).entity(entity).build();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return Response.status(500).build();
         } catch (NoPurchaseWasFoundForIdUser e) {
             return Response.status(404).build();
+        } catch (GadgetDoesNotExistException e) {
+            throw new RuntimeException(e);
         }
     }
 }
