@@ -37,10 +37,10 @@ public class GameService {
             this.tm.addUser("Guillem", "Purti", "02112001", "guille@gmail.com", "123456");
         }
         if(tm.numGadgets()==0) {
-            this.tm.addGadget("1",3,"Ojo volador","afewifp");
-            this.tm.addGadget("2",8,"Espada sin filo","afeoejifp");
-            this.tm.addGadget("3",550,"Caminacielos","afeoejep");
-            this.tm.addGadget("4",2,"Percha sonica","afeoe");
+            this.tm.addGadget("1",3,"Ojo volador","https://img.freepik.com/vector-premium/objeto-volador-no-identificado-pixel-estilo_475147-433.jpg?w=2000");
+            this.tm.addGadget("2",8,"Espada sin filo","https://img.freepik.com/vector-premium/pixel-art-espada-vaina_475147-473.jpg");
+            this.tm.addGadget("3",550,"Caminacielos","https://img.freepik.com/vector-premium/pixel-art-arcoiris-dos-nubes_475147-164.jpg?w=2000");
+            this.tm.addGadget("4",2,"Percha sonica","https://media.istockphoto.com/id/1441010991/es/vector/s%C3%ADmbolo-de-pixel-art-de-poncho-de-punto-rojo-sobre-una-percha-aislada-sobre-fondo-blanco.jpg?b=1&s=612x612&w=0&k=20&c=F4wO3fjq8aXxpT2pRYj4hca3T8Zlv4ZZCtZRv5OPXJY=");
         }
     }
     @GET
