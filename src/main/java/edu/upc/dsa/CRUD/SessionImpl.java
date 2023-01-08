@@ -127,8 +127,8 @@ public class SessionImpl implements Session {
         List<Object> objects = null;
 
         try {
-            List<String> keys = params.keySet().stream().toList();
-            List<String> values = params.values().stream().toList();
+            List<String> keys = (List<String>) params.keySet().stream();
+            List<String> values = (List<String>) params.values().stream();
 
             Object entity = theClass.newInstance();
 
