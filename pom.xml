@@ -64,13 +64,6 @@
             <version>2.3.1</version>
         </dependency>
         <dependency>
-            <groupId>edu.upc.eetac.dsa</groupId>
-            <artifactId>crud</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CRUD-1.0-vers2.jar</systemPath>
-        </dependency>
-        <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
             <version>2.1.2</version>

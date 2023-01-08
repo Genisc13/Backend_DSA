@@ -1,8 +1,8 @@
 package edu.upc.dsa;
 
 //import arg.crud.*;
-import edu.upc.eetac.dsa.FactorySession;
-import edu.upc.eetac.dsa.Session;
+import edu.upc.dsa.CRUD.FactorySession;
+import edu.upc.dsa.CRUD.Session;
 import edu.upc.dsa.exceptions.*;
 import edu.upc.dsa.models.Credentials;
 import edu.upc.dsa.models.Gadget;
