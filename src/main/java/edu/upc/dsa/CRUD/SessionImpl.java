@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -127,8 +128,8 @@ public class SessionImpl implements Session {
         List<Object> objects = null;
 
         try {
-            List<String> keys = (List<String>) params.keySet().stream();
-            List<String> values = (List<String>) params.values().stream();
+            List<String> keys = new ArrayList<>(params.keySet());
+            List<String> values = new ArrayList<>(params.values());
 
             Object entity = theClass.newInstance();
 
