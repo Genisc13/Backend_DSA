@@ -1,7 +1,7 @@
 package edu.upc.dsa.CRUD;
 
-import edu.upc.eetac.dsa.util.ObjectHelper;
-import edu.upc.eetac.dsa.util.QueryHelper;
+import edu.upc.dsa.CRUD.util.ObjectHelper;
+import edu.upc.dsa.CRUD.util.QueryHelper;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
