@@ -13,6 +13,21 @@ body{
     justify-content: center;
     font-family: "Arial Black", monospace;
 }
+.registerButton {
+    text-decoration:none;
+    font-weight: 600;
+    font-size: 15px;
+    color:white;
+    padding-top:10px;
+    padding-bottom:10px;
+    padding-left:25px;
+    padding-right:25px;
+    background-color:forestgreen;
+    border-color: lightgreen;
+    border-width: 3px;
+    border-style: solid;
+    border-radius:35px;
+}
 .card{
     background-color: transparent;
 }
@@ -45,7 +60,7 @@ body{
 }
 .form-header{
     /*background-image: linear-gradient(to right, darkolivegreen,darkgreen);*/
-    background-color: rgba(125, 70, 208, 0.7);
+    background-color: yellowgreen;
     text-align: center;
     padding: 20px;
 }
@@ -166,7 +181,7 @@ form .txt_field{
     transition: 0.3s;
     padding: 16px;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.86);
+    background-color: yellowgreen;
 }
 
 .card:hover {

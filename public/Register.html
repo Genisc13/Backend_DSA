@@ -10,7 +10,7 @@
     <title>THE MAZE OF ROOMS</title>
     <style>
         body{
-            background-image: url('Fondo1.png');
+            background-image: url('RegisterBack.png');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
@@ -94,9 +94,14 @@
                     <span></span>
                     <label>Password</label>
                 </div>
-                <button type="button" class="btn btn-block btn-warning" id="registerButton">Accept</button><br>
+                <div class="txt_field">
+                    <input type="text" required id="userPassword2">
+                    <span></span>
+                    <label>Password</label>
+                </div>
+                <button type="button" class="registerButton" id="registerButton">Accept</button><br>
 
-                <button onclick="returnNow()" type="button" class="btn btn-info" id="return">Return</button>
+                <button onclick="returnNow()" type="button" class="registerButton" id="return">Return</button>
 
             </div>
         </form>

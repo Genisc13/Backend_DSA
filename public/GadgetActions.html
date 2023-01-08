@@ -11,7 +11,7 @@
     <title>THE MAZE OF ROOMS</title>
     <style>
         body{
-            background-image: url('Fondo3.png');
+            background-image: url('GadgetBack.jpg');
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-size: cover;
@@ -46,14 +46,11 @@
                 //$("#currentCoins").text("Now you have "+sessionStorage.getItem('coins')+ " libras turcas");
             },
             error: function () {
-                alert("Error in the Gadgets shop entrance!");
-                $(location).attr('href', "index.html");
             }
         })
     </script>
     <script>
         function buyGadget(idGadget) {
-            alert("HEYYYY " + idGadget)
             //document.getElementById("demo").innerHTML = "Hello World";
             $.ajax({
                 type: 'PUT',
@@ -86,7 +83,7 @@
                             htmlLine='<div class="row">' +
                                 '<div class="column">' +
                                 '<div class="card">' +
-                                '<img src="Pocima.png" alt="Avatar" style="width:100%">' +
+                                '<img src="'+json[0].unityShape+'" style="width:100%">'+
                                 '<div class="flex-container">' +
                                 '<div><b>'+json[0].description+'</b></div><div><p>'+json[0].cost+' libras turcas</p></div>' +
                                 '</div>' +
@@ -102,7 +99,7 @@
                                         '<div class="row">' +
                                         '<div class="column">' +
                                         '<div class="card">' +
-                                        '<img src="Pocima.png" alt="Avatar" style="width:100%">' +
+                                        '<img src="'+json[i].unityShape+'" style="width:100%">'+
                                         '<div class="flex-container">' +
                                         '<div><b>'+json[i].description+'</b></div><div><p>'+json[i].cost+' libras turcas</p></div>' +
                                         '</div>'+
@@ -115,7 +112,7 @@
                                     //$('#listGadgets').append('<tr><td>'+json[i].id+'</td><td>'+json[i].description+'</td><td>'+json[i].cost+'</td></tr>');
                                     htmlLine += '<div class="column">' +
                                         '<div class="card">' +
-                                        '<img src="Pocima.png" alt="Avatar" style="width:100%">' +
+                                        '<img src="'+json[i].unityShape+'" style="width:100%">' +
                                         '<div class="flex-container">' +
                                         '<div><b>'+json[i].description+'</b></div><div><p>'+json[i].cost+' libras turcas</p></div>' +
                                         '</div>' +
@@ -144,7 +141,7 @@
         </div>
         <div id="currentCoins"></div><br>
         <div>
-            <button style="width: auto;margin: auto" onclick="hidebutton(this)" type="button" class="btn btn-block btn-warning" id="listButton">I want to see the Gadget's List...</button>
+            <button style="width: auto;margin: auto" onclick="hidebutton(this)" type="button" class="registerButton" id="listButton">I want to see the Gadget's List...</button>
         </div>
         <div id="gadgetsCards"></div>
     </div>
