@@ -101,6 +101,11 @@ public class SessionImpl implements Session {
         try {
             String updateQuery = QueryHelper.createQueryDELETE(object);
             PreparedStatement statement = this.conn.prepareStatement(updateQuery);
+            int i =1;
+            for(String field:ObjectHelper.getFields(object)){
+                statement.setObject(i++,ObjectHelper.getter(object,field));
+
+            }
             statement.setObject(1, ObjectHelper.getter(object, ObjectHelper.getIdAttributeName(object.getClass())));
             statement.executeQuery();
         } catch (NoSuchFieldException | InvocationTargetException | IllegalAccessException | SQLException var4) {
@@ -174,3 +179,4 @@ public class SessionImpl implements Session {
     }
 
 }
+

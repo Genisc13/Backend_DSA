@@ -11,7 +11,7 @@ public interface GameManager {
 
     public int numUsers();
     public int numGadgets();
-    public String addUser(String name, String surname, String date, String mail, String password) throws EmailAlreadyBeingUsedException, SQLException;
+    public String addUser(String name, String surname, String date, String mail, String password, String profilePicture) throws EmailAlreadyBeingUsedException, SQLException;
     public Map<String, User> getUsers();
     public User getUser(String idUser) throws UserDoesNotExistException;
     public String userLogin(Credentials credentials) throws IncorrectCredentialsException, SQLException;
@@ -21,6 +21,11 @@ public interface GameManager {
     public void buyGadget(String idGadget, String idUser) throws NotEnoughMoneyException, GadgetDoesNotExistException, UserDoesNotExistException, SQLException;
     public Object getGadget(String id) throws GadgetDoesNotExistException;
     public Object deleteGadget(String id) throws GadgetDoesNotExistException;
-
+    public void updateUserPassword(PasswordChangeRequirements passwordChangeRequirements) throws SQLException, IncorrectCredentialsException;
     public List<Gadget> purchasedGadgets(String idUser) throws SQLException, NoPurchaseWasFoundForIdUser, GadgetDoesNotExistException;
+    public List<User> rankingOfUsers() throws SQLException;
+    public void deletePurchasedGadget(Purchase purchase);
+    public void postChatMessage(ChatMessage chatMessage) throws SQLException;
+    public List<ChatMessage> getChat();
+    public void reportAbuse(Abuse abuse) throws SQLException;
 }

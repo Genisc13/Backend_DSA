@@ -32,9 +32,9 @@ public class GameService {
         logger.info("Hey im here using the service");
 
         if (tm.numUsers()==0) {
-            this.tm.addUser("Alba", "Roma", "23112001", "albaroma@gmail.com", "123456");
-            this.tm.addUser("Maria", "Ubiergo", "02112001", "meri@gmail.com", "123456");
-            this.tm.addUser("Guillem", "Purti", "02112001", "guille@gmail.com", "123456");
+            this.tm.addUser("Alba", "Roma", "23112001", "albaroma@gmail.com", "123456","https://i.pinimg.com/236x/56/77/62/5677627c338956d1cb9bbdb7f49ae79e.jpg");
+            this.tm.addUser("Maria", "Ubiergo", "02112001", "meri@gmail.com", "123456", "https://i.pinimg.com/236x/e9/57/2a/e9572a70726980ed5445c02e1058760b.jpg");
+            this.tm.addUser("Guillem", "Purti", "02112001", "guille@gmail.com", "123456", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTty5Z4hEeNEUICuhCAREChxEOhLSAL3KthnN9Cul7zs_gmb73Gcjz09LMFcC-R1q8d2Zc&usqp=CAU");
         }
         if(tm.numGadgets()==0) {
             this.tm.addGadget("1",3,"Ojo volador","https://img.freepik.com/vector-premium/objeto-volador-no-identificado-pixel-estilo_475147-433.jpg?w=2000");
@@ -128,7 +128,7 @@ public class GameService {
     public Response newUser(UserInformation newUser){
         if (Objects.equals(newUser.getName(), "") || Objects.equals(newUser.getBirthday(), "") || Objects.equals(newUser.getEmail(), "") || Objects.equals(newUser.getPassword(), "") || Objects.equals(newUser.getSurname(), ""))  return Response.status(500).entity(newUser).build();
         try{
-            this.tm.addUser(newUser.getName(), newUser.getSurname(), newUser.getBirthday(), newUser.getEmail(), newUser.getPassword());
+            this.tm.addUser(newUser.getName(), newUser.getSurname(), newUser.getBirthday(), newUser.getEmail(), newUser.getPassword(), newUser.getProfilePicture());
             return Response.status(201).entity(newUser).build();
         }
         catch (EmailAlreadyBeingUsedException | SQLException E){
@@ -254,5 +254,117 @@ public class GameService {
             throw new RuntimeException(e);
         }
     }
+    @PUT
+    @ApiOperation(value = "update Password", notes = "Do you want to change the password?")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful password change"),
+            @ApiResponse(code = 403, message = "Incorrect credentials exception."),
+            @ApiResponse(code = 404, message = "Not found the user in DB")
+    })
+    @Path("/user/update")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response updateUserPassword(PasswordChangeRequirements passwordChangeRequirements){
+        try{
+            this.tm.updateUserPassword(passwordChangeRequirements);
+            return Response.status(201).build();
+        }
+        catch (SQLException E){
+            return Response.status(404).build();
+        } catch (IncorrectCredentialsException e) {
+            return Response.status(403).build();
+        }
+    }
+    @GET
+    @ApiOperation(value = "Gives the ranking of users", notes = "User list")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
+            @ApiResponse(code = 404, message = "Not users found in DB"),
+    })
+    @Path("/user/allOrdered")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response rankingOfUsers(){
+        try{
+            logger.info("Ranking of Users being cooked...");
+            List<User> rankingOfUsers = this.tm.rankingOfUsers();
+            GenericEntity<List<User>> entity = new GenericEntity<List<User>>(rankingOfUsers) {};
+            return Response.status(201).entity(entity).build();
+        }
+        catch(SQLException E){
+            return Response.status(201).build();
+        }
+    }
+
+    @PUT
+    @ApiOperation(value = "Deletes a purchased gadget", notes = "Deletes a purchased gadget")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful")
+    })
+    @Path("/user/deletePurchase")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response deletePurchasedGadget(Purchase purchase) {
+        this.tm.deletePurchasedGadget(purchase);
+        return Response.status(201).build();
+
+    }
+    @POST
+    @ApiOperation(value = "create a new User", notes = "Do you want to register to our shop?")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 409, message = "Something bad happened"),
+            @ApiResponse(code = 500, message = "Empty name")
+    })
+    @Path("/user/chat/newMessage")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response newChatMessage(ChatMessage chatMessage){
+        if (Objects.equals(chatMessage.getName(), ""))
+            return Response.status(500).build();
+        try{
+            this.tm.postChatMessage(chatMessage);
+            return Response.status(201).build();
+        }
+        catch(SQLException E){
+            return Response.status(409).build();
+        }
+
+    }
+    @GET
+    @ApiOperation(value = "See all the chat", notes = "of all your friends")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = ChatMessage.class, responseContainer="List")
+    })
+    @Path("/user/chat/all")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getChat() {
+        List<ChatMessage> listOfChats = this.tm.getChat();
+        GenericEntity<List<ChatMessage>> entity = new GenericEntity<List<ChatMessage>>(listOfChats) {};
+        return Response.status(201).entity(entity).build();
+    }
+    @POST
+    @ApiOperation(value = "post an abuse", notes = "report you abuses")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 403, message = "DB problems"),
+            @ApiResponse(code = 500, message = "Put your name, informer")
+    })
+    @Path("/issue")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response postAbuse(Abuse newAbuse){
+        if (newAbuse.getInformer()==null)  return Response.status(500).build();
+        try {
+            this.tm.reportAbuse(newAbuse);
+            return Response.status(201).build();
+        } catch (SQLException e) {
+            return Response.status(403).build();
+        }
+
+    }
+
+
+
+
+
+
+
 }
+
 

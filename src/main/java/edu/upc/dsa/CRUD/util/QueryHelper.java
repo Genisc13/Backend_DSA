@@ -103,8 +103,18 @@ public class QueryHelper {
 
     public static String createQueryDELETE(Object entity) {
         StringBuffer buffer = new StringBuffer();
-        buffer.append("DELETE FROM ").append(entity.getClass().getSimpleName());
-        buffer.append(" WHERE ").append(ObjectHelper.getIdAttributeName(entity.getClass())).append(" = ?");
+        buffer.append("DELETE FROM ").append(entity.getClass().getSimpleName()).append(" WHERE ");
+        Boolean first=true;
+        String[] fields=ObjectHelper.getFields(entity);
+        for(String field:fields){
+            if(first){
+                buffer.append(field).append(" = ? ");
+                first=false;
+            }
+            else{
+                buffer.append("AND ").append(field).append(" = ? ");
+            }
+        }
         return buffer.toString();
     }
 

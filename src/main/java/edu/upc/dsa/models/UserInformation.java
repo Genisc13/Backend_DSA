@@ -2,6 +2,7 @@ package edu.upc.dsa.models;
 
 import java.util.List;
 
+
 public class UserInformation {
     String name;
     String surname;
@@ -9,6 +10,7 @@ public class UserInformation {
     String email;
     String password;
     int coins;
+    String profilePicture;
 
     public UserInformation(){};
 
@@ -29,6 +31,11 @@ public class UserInformation {
         this.setEmail(u.getEmail());
         this.setPassword(u.getPassword());
         this.setCoins(u.getCoins());
+        this.setProfilePicture(u.getProfilePicture());
+    }
+
+    private void setProfilePicture(String profilePicture) {
+        this.profilePicture=profilePicture;
     }
 
 
@@ -70,6 +77,9 @@ public class UserInformation {
 
     public String getName() {
         return this.name;
+    }
+    public String getProfilePicture(){
+        return this.profilePicture;
     }
 
     public void setCoins(int coins) {

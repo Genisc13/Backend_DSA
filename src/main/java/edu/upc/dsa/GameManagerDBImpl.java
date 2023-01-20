@@ -4,19 +4,15 @@ package edu.upc.dsa;
 import edu.upc.dsa.CRUD.FactorySession;
 import edu.upc.dsa.CRUD.Session;
 import edu.upc.dsa.exceptions.*;
-import edu.upc.dsa.models.Credentials;
-import edu.upc.dsa.models.Gadget;
-import edu.upc.dsa.models.Purchase;
-import edu.upc.dsa.models.User;
+import edu.upc.dsa.models.*;
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
 import java.util.*;
-
-
 public class GameManagerDBImpl implements GameManager{
     Session session;
     private static GameManager instance;
+    User userForComparable;
     final static Logger logger = Logger.getLogger(GameManagerDBImpl.class);
 
     public static GameManager getInstance() {
@@ -40,9 +36,9 @@ public class GameManagerDBImpl implements GameManager{
     }
 
     @Override
-    public String addUser(String name, String surname, String date, String email, String password) throws EmailAlreadyBeingUsedException, SQLException {
+    public String addUser(String name, String surname, String date, String email, String password, String profilePicture) throws EmailAlreadyBeingUsedException, SQLException {
         logger.info("Adding a user...");
-        User user = new User(name, surname, date, email, password);
+        User user = new User(name, surname, date, email, password,profilePicture);
         try{
             user = (User) this.session.get(User.class, "email", email);
         } catch(SQLException e) {
@@ -176,6 +172,20 @@ public class GameManagerDBImpl implements GameManager{
     }
 
     @Override
+    public void updateUserPassword(PasswordChangeRequirements passwordChangeRequirements) throws SQLException, IncorrectCredentialsException {
+        logger.info("I am trying to update the user password!");
+        User userToUpdate = (User) this.session.get(User.class, "id", passwordChangeRequirements.getIdUser());
+        Credentials oldCredentials=new Credentials(passwordChangeRequirements.getEmail(), passwordChangeRequirements.getOldPassword());
+        logger.info("The old password is "+oldCredentials.getPassword());
+        if(!userToUpdate.validCredentials(oldCredentials))
+            throw new IncorrectCredentialsException();
+        logger.info("I am setting the password!");
+        userToUpdate.setPassword(passwordChangeRequirements.getNewPassword());
+        logger.info("Updating the password!");
+        this.session.update(userToUpdate);
+    }
+
+    @Override
     public List<Gadget> purchasedGadgets(String idUser) throws SQLException, NoPurchaseWasFoundForIdUser, GadgetDoesNotExistException {
         logger.info("Looking for gadgets purchased by user with id: " + idUser);
         HashMap<String, String> user = new HashMap<>();
@@ -200,4 +210,52 @@ public class GameManagerDBImpl implements GameManager{
         logger.info("No purchase was found for given user id");
         throw new NoPurchaseWasFoundForIdUser();
     }
+    public List<User> rankingOfUsers() throws SQLException{
+        logger.info("Getting all users...");
+        List<Object> usersList= this.session.findAll(User.class);
+        List<User> usersRanking=new ArrayList<>();
+        for(Object o:usersList){
+            User user =(User) o;
+            usersRanking.add(user);
+        }
+        usersRanking.sort((u1,u2)->Integer.compare(u2.getExperience(),u1.getExperience()));
+        return usersRanking;
+    }
+    public void deletePurchasedGadget(Purchase purchase){
+        logger.info("Deleting the purchase of the gadget!");
+        this.session.delete(purchase);
+        logger.info("The purchase has been correctly deleted :)");
+
+
+    }
+
+    @Override
+    public void postChatMessage(ChatMessage chatMessage) throws SQLException {
+        logger.info("Cooking a new message of the chat");
+        this.session.save(chatMessage);
+        logger.info("The new message has been correctly created.");
+
+    }
+
+    @Override
+    public List<ChatMessage> getChat(){
+        logger.info("Getting forum...");
+        List<Object> chatsFromDB = this.session.findAll(ChatMessage.class);
+        List<ChatMessage> listOfChats=new ArrayList<>();
+        for(Object o : chatsFromDB){
+            listOfChats.add((ChatMessage) o);
+        }
+        logger.info("The list of chats has size of " + listOfChats.size());
+        return listOfChats;
+
+    }
+
+    @Override
+    public void reportAbuse(Abuse abuse) throws SQLException {
+        logger.info("Report of the abuse being cooked");
+        this.session.save(abuse);
+        logger.info("The abuse is informed by "+abuse.getInformer()+" and its description is "+abuse.getMessage());
+    }
+
 }
+

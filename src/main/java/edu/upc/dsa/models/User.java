@@ -8,6 +8,7 @@ import edu.upc.dsa.util.RandomUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class User {
     String idUser;
@@ -16,13 +17,14 @@ public class User {
     String birthday;
     String email;
     String password;
+    String profilePicture;
     Boolean currentlyPlaying;
     Integer coins;
     Integer experience;
 
 
     public User(){};
-    public User(String name, String surname,String date, String email, String password) {
+    public User(String name, String surname,String date, String email, String password, String profilePicture) {
         this.idUser = RandomUtils.getId();
         this.name = name;
         this.surname = surname;
@@ -31,7 +33,9 @@ public class User {
         this.password = password;
         this.currentlyPlaying = false;
         this.coins = 50;
-        this.experience = 0;
+        Random rnd = new Random();
+        this.experience =rnd.nextInt(100);
+        this.profilePicture=profilePicture;
 
     }
 
@@ -99,6 +103,12 @@ public class User {
 
     public void setCoins(Integer coins) {
         this.coins = coins;
+    }
+    public String getProfilePicture(){
+        return this.profilePicture;
+    }
+    public void setProfilePicture(String profilePicture){
+        this.profilePicture=profilePicture;
     }
 
     public void purchaseGadget(Gadget gadget) throws NotEnoughMoneyException {

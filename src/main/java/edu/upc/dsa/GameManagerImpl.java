@@ -1,12 +1,11 @@
 package edu.upc.dsa;
 
 import edu.upc.dsa.exceptions.*;
-import edu.upc.dsa.models.Credentials;
+import edu.upc.dsa.models.*;
 
+import java.sql.SQLException;
 import java.util.*;
 
-import edu.upc.dsa.models.Gadget;
-import edu.upc.dsa.models.User;
 import org.apache.log4j.Logger;
 
 public class GameManagerImpl implements GameManager {
@@ -35,9 +34,9 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
-    public String addUser(String name, String surname, String birthday, String email, String password) throws EmailAlreadyBeingUsedException{
+    public String addUser(String name, String surname, String birthday, String email, String password, String profilePicture) throws EmailAlreadyBeingUsedException{
         logger.info("Adding a new User Starting...");
-        User newUser= new User(name,surname,birthday,email,password);
+        User newUser= new User(name,surname,birthday,email,password, profilePicture);
         List<User> userList = new ArrayList<>(this.users.values());
         logger.info("Checking whether this users exists...");
 
@@ -83,6 +82,7 @@ public class GameManagerImpl implements GameManager {
         }
         return false;
     }
+
     public List<Gadget> gadgetList(){
 
         List<Gadget> lista=this.gadgetList;
@@ -193,7 +193,34 @@ public class GameManagerImpl implements GameManager {
     }
 
     @Override
+    public void updateUserPassword(PasswordChangeRequirements passwordChangeRequirements) throws SQLException, IncorrectCredentialsException {
+
+    }
+
+    @Override
     public List<Gadget> purchasedGadgets(String idUser) {
         return null;
+    }
+    public List<User> rankingOfUsers() throws SQLException{
+        return null;
+    }
+    public void deletePurchasedGadget(Purchase purchase){
+
+
+    }
+
+    @Override
+    public void postChatMessage(ChatMessage chatMessage) throws SQLException {
+
+    }
+
+    @Override
+    public List<ChatMessage> getChat() {
+        return null;
+    }
+
+    @Override
+    public void reportAbuse(Abuse abuse) throws SQLException {
+
     }
 }
