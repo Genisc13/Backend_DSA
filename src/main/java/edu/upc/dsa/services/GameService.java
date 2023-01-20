@@ -3,7 +3,6 @@ package edu.upc.dsa.services;
 
 import edu.upc.dsa.GameManager;
 import edu.upc.dsa.GameManagerDBImpl;
-import edu.upc.dsa.GameManagerImpl;
 
 import edu.upc.dsa.exceptions.*;
 import edu.upc.dsa.models.*;
@@ -332,10 +331,10 @@ public class GameService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = ChatMessage.class, responseContainer="List")
     })
-    @Path("/user/chat/all")
+    @Path("/user/chat/{num}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getChat() {
-        List<ChatMessage> listOfChats = this.tm.getChat();
+    public Response getChat(@PathParam("num") int num) {
+        List<ChatMessage> listOfChats = this.tm.getChat(num);
         GenericEntity<List<ChatMessage>> entity = new GenericEntity<List<ChatMessage>>(listOfChats) {};
         return Response.status(201).entity(entity).build();
     }

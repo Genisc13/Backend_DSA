@@ -2,6 +2,8 @@ package edu.upc.dsa.CRUD;
 
 import edu.upc.dsa.CRUD.util.ObjectHelper;
 import edu.upc.dsa.CRUD.util.QueryHelper;
+import edu.upc.dsa.models.ChatMessage;
+
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -178,5 +180,19 @@ public class SessionImpl implements Session {
 
     }
 
+    @Override
+    public List<Object> getMessagesSorted() {
+        List<Object> messages = null;
+
+        String selectQuery = "SELECT * FROM ChatMessage ORDER BY number ASC";
+        try {
+            PreparedStatement statement = this.conn.prepareStatement(selectQuery);
+            messages = ObjectHelper.createObjects(statement.executeQuery(), ChatMessage.class);
+        } catch (SQLException | NoSuchFieldException | ClassNotFoundException | InvocationTargetException | InstantiationException |
+                 IllegalAccessException  var4) {
+            var4.printStackTrace();
+        }
+        return messages;
+    }
 }
 

@@ -15,4 +15,5 @@ public interface Session {
     List<Object> findAll(Class theClass, HashMap<String, String> params) throws SQLException;
     List<Object> query(String query, Class theClass, HashMap params);
     void deleteRecords(Class theClass);
+    List<Object> getMessagesSorted();
 }

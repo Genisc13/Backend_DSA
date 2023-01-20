@@ -26,6 +26,6 @@ public interface GameManager {
     public List<User> rankingOfUsers() throws SQLException;
     public void deletePurchasedGadget(Purchase purchase);
     public void postChatMessage(ChatMessage chatMessage) throws SQLException;
-    public List<ChatMessage> getChat();
+    public List<ChatMessage> getChat(Integer firstMessage);
     public void reportAbuse(Abuse abuse) throws SQLException;
 }

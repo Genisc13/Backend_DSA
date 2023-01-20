@@ -210,6 +210,7 @@ public class GameManagerDBImpl implements GameManager{
         logger.info("No purchase was found for given user id");
         throw new NoPurchaseWasFoundForIdUser();
     }
+
     public List<User> rankingOfUsers() throws SQLException{
         logger.info("Getting all users...");
         List<Object> usersList= this.session.findAll(User.class);
@@ -221,12 +222,11 @@ public class GameManagerDBImpl implements GameManager{
         usersRanking.sort((u1,u2)->Integer.compare(u2.getExperience(),u1.getExperience()));
         return usersRanking;
     }
+
     public void deletePurchasedGadget(Purchase purchase){
         logger.info("Deleting the purchase of the gadget!");
         this.session.delete(purchase);
         logger.info("The purchase has been correctly deleted :)");
-
-
     }
 
     @Override
@@ -238,16 +238,16 @@ public class GameManagerDBImpl implements GameManager{
     }
 
     @Override
-    public List<ChatMessage> getChat(){
+    public List<ChatMessage> getChat(Integer firstMessage){
         logger.info("Getting forum...");
-        List<Object> chatsFromDB = this.session.findAll(ChatMessage.class);
-        List<ChatMessage> listOfChats=new ArrayList<>();
-        for(Object o : chatsFromDB){
-            listOfChats.add((ChatMessage) o);
+        List<ChatMessage> messages = new ArrayList<>();
+        List<Object> allMessages = this.session.getMessagesSorted();
+        for(int i = firstMessage; i < allMessages.size(); i++) {
+            ChatMessage user = (ChatMessage) allMessages.get(i);
+            messages.add(user);
         }
-        logger.info("The list of chats has size of " + listOfChats.size());
-        return listOfChats;
-
+        logger.info("The list of chats has size of " + messages.size());
+        return messages;
     }
 
     @Override
@@ -256,6 +256,5 @@ public class GameManagerDBImpl implements GameManager{
         this.session.save(abuse);
         logger.info("The abuse is informed by "+abuse.getInformer()+" and its description is "+abuse.getMessage());
     }
-
 }
 
