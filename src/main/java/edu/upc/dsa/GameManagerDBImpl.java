@@ -288,5 +288,12 @@ public class GameManagerDBImpl implements GameManager{
         this.session.save(abuse);
         logger.info("The abuse is informed by "+abuse.getInformer()+" and its description is "+abuse.getMessage());
     }
+
+    @Override
+    public void addQuestion(Question question) throws SQLException {
+        logger.info("Adding a question...");
+        this.session.save(question);
+        logger.info("The Question has been added correctly in : "+question.getDate()+", "+question.getTitle()+", "+question.getMessage()+", "+question.getSender());
+    }
 }
 

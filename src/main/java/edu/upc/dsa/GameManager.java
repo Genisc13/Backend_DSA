@@ -31,4 +31,5 @@ public interface GameManager {
     public void postChatMessage(ChatMessage chatMessage) throws SQLException;
     public List<ChatMessage> getChat(Integer firstMessage);
     public void reportAbuse(Abuse abuse) throws SQLException;
+    public void addQuestion(Question question) throws SQLException;
 }
