@@ -11,11 +11,14 @@ public interface GameManager {
 
     public int numUsers();
     public int numGadgets();
+    public int numFAQs();
+    public void addFAQ(String q, String a) throws SQLException, FAQAlreadyBeingAskedException;
     public String addUser(String name, String surname, String date, String mail, String password, String profilePicture) throws EmailAlreadyBeingUsedException, SQLException;
     public Map<String, User> getUsers();
     public User getUser(String idUser) throws UserDoesNotExistException;
     public String userLogin(Credentials credentials) throws IncorrectCredentialsException, SQLException;
     public List<Gadget> gadgetList();
+    public List<FAQ> FAQsList();
     public void addGadget(String idGadget, int cost, String description, String unityShape) throws SQLException, GadgetWithSameIdAlreadyExists;
     public void updateGadget(Gadget gadget) throws GadgetDoesNotExistException, SQLException;
     public void buyGadget(String idGadget, String idUser) throws NotEnoughMoneyException, GadgetDoesNotExistException, UserDoesNotExistException, SQLException;

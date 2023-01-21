@@ -36,6 +36,26 @@ public class GameManagerDBImpl implements GameManager{
     }
 
     @Override
+    public int numFAQs() {
+        return this.session.findAll(FAQ.class).size();
+    }
+
+    @Override
+    public void addFAQ(String q, String a) throws SQLException, FAQAlreadyBeingAskedException {
+        logger.info("Adding a FAQ...");
+        FAQ faq = new FAQ(q,a);
+        logger.info("New question: "+q);
+        try{
+            faq = (FAQ) this.session.get(FAQ.class, "questionFAQ", q);
+            logger.info("FAQ cannot be added because this question is already in the system :(");
+            throw new FAQAlreadyBeingAskedException();
+        } catch(SQLException e) {
+            this.session.save(faq);
+            logger.info("FAQ has been added correctly in DB");
+        }
+    }
+
+    @Override
     public String addUser(String name, String surname, String date, String email, String password, String profilePicture) throws EmailAlreadyBeingUsedException, SQLException {
         logger.info("Adding a user...");
         User user = new User(name, surname, date, email, password,profilePicture);
@@ -104,6 +124,18 @@ public class GameManagerDBImpl implements GameManager{
             res.add((Gadget) o);
         }
         logger.info("The list of gadgets has a size of "+res.size());
+        return res;
+    }
+
+    @Override
+    public List<FAQ> FAQsList() {
+        logger.info("Getting all the FAQs...");
+        List<Object> preguntas = this.session.findAll(FAQ.class);
+        List<FAQ> res = new ArrayList<>();
+        for (Object o : preguntas){
+            res.add((FAQ) o);
+        }
+        logger.info("The list of FAQs has a size of "+res.size());
         return res;
     }
 
