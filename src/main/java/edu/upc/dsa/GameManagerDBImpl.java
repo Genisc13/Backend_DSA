@@ -1,28 +1,52 @@
 package edu.upc.dsa;
 
 //import arg.crud.*;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.messaging.*;
 import edu.upc.dsa.CRUD.FactorySession;
 import edu.upc.dsa.CRUD.Session;
 import edu.upc.dsa.exceptions.*;
 import edu.upc.dsa.models.*;
 import org.apache.log4j.Logger;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.*;
 public class GameManagerDBImpl implements GameManager{
     Session session;
+    FirebaseApp app;
     private static GameManager instance;
     User userForComparable;
     final static Logger logger = Logger.getLogger(GameManagerDBImpl.class);
 
-    public static GameManager getInstance() {
+    public static GameManager getInstance() throws FileNotFoundException {
         logger.info("Hey im here making the instance of the db implementation");
         if (instance==null) instance = new GameManagerDBImpl();
         return instance;
     }
 
-    public GameManagerDBImpl(){
+    public GameManagerDBImpl() throws FileNotFoundException {
         this.session = FactorySession.openSession("jdbc:mariadb://localhost:3306/rooms","rooms", "rooms");
+        initializeFirebase();
+    }
+
+    private void initializeFirebase() throws FileNotFoundException {
+        FileInputStream serviceAccount =
+                new FileInputStream("libs/backenddsa-firebase-adminsdk-w6s32-22d7751cb5.json");
+        try {
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setProjectId("backenddsa")
+                    .build();
+
+            this.app = FirebaseApp.initializeApp(options);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override
@@ -265,7 +289,29 @@ public class GameManagerDBImpl implements GameManager{
     public void postChatMessage(ChatMessage chatMessage) throws SQLException {
         logger.info("Cooking a new message of the chat");
         this.session.save(chatMessage);
-        logger.info("The new message has been correctly created.");
+        logger.info("The new message has been correctly saved.");
+        logger.info("Sending Firebase Notification...");
+
+        Notification notification = Notification.builder()
+                .setTitle(chatMessage.getName() + " has sent a message")
+                .setBody("Message: " + chatMessage.getMessage())
+                .build();
+
+        Message message = Message.builder()
+                .setNotification(notification)
+                .setTopic("chat")
+                .build();
+
+        try {
+            FirebaseMessaging.getInstance(app).send(message);
+            logger.info("Firebase Notification was sent correctly!");
+        } catch (FirebaseMessagingException ex) {
+            if (ex.getMessagingErrorCode() == MessagingErrorCode.UNREGISTERED) {
+                System.err.println("Device token has been unregistered");
+            } else {
+                System.err.println("Failed to send the notification");
+            }
+        }
 
     }
 

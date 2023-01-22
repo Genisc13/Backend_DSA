@@ -13,6 +13,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class GameService {
     private GameManager tm;
     final static org.apache.log4j.Logger logger = Logger.getLogger(GameManagerDBImpl.class);
 
-    public GameService() throws EmailAlreadyBeingUsedException, SQLException, GadgetWithSameIdAlreadyExists, FAQAlreadyBeingAskedException {
+    public GameService() throws EmailAlreadyBeingUsedException, SQLException, GadgetWithSameIdAlreadyExists, FAQAlreadyBeingAskedException, FileNotFoundException {
         this.tm = GameManagerDBImpl.getInstance();
         logger.info("Hey im here using the service");
 
