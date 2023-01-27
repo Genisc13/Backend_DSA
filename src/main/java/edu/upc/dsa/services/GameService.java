@@ -37,10 +37,10 @@ public class GameService {
             this.tm.addUser("Guillem", "Purti", "02112001", "guille@gmail.com", "123456", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTty5Z4hEeNEUICuhCAREChxEOhLSAL3KthnN9Cul7zs_gmb73Gcjz09LMFcC-R1q8d2Zc&usqp=CAU");
         }
         if(tm.numGadgets()==0) {
-            this.tm.addGadget("1",3,"Water Retaw","https://img.freepik.com/vector-premium/objeto-volador-no-identificado-pixel-estilo_475147-433.jpg?w=2000");
-            this.tm.addGadget("2",8,"Fire Erif","https://img.freepik.com/vector-premium/pixel-art-espada-vaina_475147-473.jpg");
-            this.tm.addGadget("3",550,"Earth Htrae","https://img.freepik.com/vector-premium/pixel-art-arcoiris-dos-nubes_475147-164.jpg?w=2000");
-            this.tm.addGadget("4",2,"Cloud Duolc","https://media.istockphoto.com/id/1441010991/es/vector/s%C3%ADmbolo-de-pixel-art-de-poncho-de-punto-rojo-sobre-una-percha-aislada-sobre-fondo-blanco.jpg?b=1&s=612x612&w=0&k=20&c=F4wO3fjq8aXxpT2pRYj4hca3T8Zlv4ZZCtZRv5OPXJY=");
+            this.tm.addGadget("1",3,"Water Retaw","https://art.pixilart.com/sr2d6755ba5061f.png");
+            this.tm.addGadget("2",8,"Fire Erif","https://art.pixilart.com/sr2b28f1e9e62aa.png");
+            this.tm.addGadget("3",550,"Earth Htrae","https://art.pixilart.com/sr22f5a76499f92.png");
+            this.tm.addGadget("4",2,"Cloud Duolc","https://art.pixilart.com/sr23f2f07caa6d8.png");
         }
         if(tm.numFAQs()==0){
             this.tm.addFAQ("Where can I see my gadgets?", "Go to your profile section");
