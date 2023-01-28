@@ -421,6 +421,21 @@ public class GameService {
         GenericEntity<List<GadgetName>> entity = new GenericEntity<List<GadgetName>>(startGameInfo) {};
         return Response.status(201).entity(entity).build();
     }
+    /*
+    @PUT
+    @ApiOperation(value = "Update of the profile picture", notes = "profile picture")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful")
+    })
+    @Path("/user/updateProfilePicture")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response updateProfilePicture() {
+        this.tm.deletePurchasedGadget(purchase);
+        return Response.status(201).build();
+
+    }
+
+     */
 }
 
 

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap');
 *{
     margin: 0;
     padding: 0;
@@ -11,7 +12,11 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: "Arial Black", monospace;
+    font-family: "Irish Grover", monospace;
+}
+:root{
+    --padding-container:100px 0;
+    --color-title: #dab664;
 }
 .registerButton {
     text-decoration:none;
@@ -28,6 +33,16 @@ body{
     border-style: solid;
     border-radius:35px;
 }
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:0 auto;
+    overflow: hidden;
+    background-color: #000;
+    padding: var(--padding-container);
+
+}
+
 .card{
     background-color: transparent;
 }
