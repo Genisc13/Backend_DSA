@@ -1,12 +1,13 @@
 package edu.upc.dsa.models;
 
 public class ProfilePicture {
-    String newProfilePicture;
     String idUser;
+    String newProfilePicture;
+
     public ProfilePicture(){}
-    public ProfilePicture(String profile, String idUser){
+    public ProfilePicture(String idUser, String newProfilePicture){
         this.idUser=idUser;
-        this.newProfilePicture=profile;
+        this.newProfilePicture=newProfilePicture;
     }
     public String getIdUser(){
         return this.idUser;
@@ -14,7 +15,7 @@ public class ProfilePicture {
     public String getProfilePicture() {
         return newProfilePicture;
     }
-    public void setProfilePicture(String profilePicture) {
-        this.newProfilePicture = profilePicture;
+    public void setProfilePicture(String newProfilePicture) {
+        this.newProfilePicture = newProfilePicture;
     }
 }

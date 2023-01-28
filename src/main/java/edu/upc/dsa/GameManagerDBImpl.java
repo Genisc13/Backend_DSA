@@ -386,7 +386,7 @@ public class GameManagerDBImpl implements GameManager{
     @Override
     public void updateProfilePicture(ProfilePicture profilePicture) throws SQLException {
         logger.info("I am trying to update the user profile picture!");
-        User userToUpdate = (User) this.session.get(User.class, "id", profilePicture.getIdUser());
+        User userToUpdate = (User) this.session.get(User.class, "idUser", profilePicture.getIdUser());
         userToUpdate.setProfilePicture(profilePicture.getProfilePicture());
         logger.info("Updating the profile picture!");
         this.session.update(userToUpdate);
