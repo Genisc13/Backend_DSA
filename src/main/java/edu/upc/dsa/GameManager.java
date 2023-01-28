@@ -32,4 +32,6 @@ public interface GameManager {
     public List<ChatMessage> getChat(Integer firstMessage);
     public void reportAbuse(Abuse abuse) throws SQLException;
     public void addQuestion(Question question) throws SQLException;
+    public void saveGame(GameInfo gameInfo) throws UserDoesNotExistException, SQLException;
+    public List<GadgetName> loadGame(String idUser) throws SQLException, NoPurchaseWasFoundForIdUser, GadgetDoesNotExistException;
 }

@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.util.*;
 public class GameManagerDBImpl implements GameManager{
@@ -340,6 +341,46 @@ public class GameManagerDBImpl implements GameManager{
         logger.info("Adding a question...");
         this.session.save(question);
         logger.info("The Question has been added correctly in : "+question.getDate()+", "+question.getTitle()+", "+question.getMessage()+", "+question.getSender());
+    }
+
+    @Override
+    public void saveGame(GameInfo gameInfo) throws UserDoesNotExistException, SQLException {
+        User user = getUser(gameInfo.getIdUser());
+        String[] info = gameInfo.getGameInfo().split("/");
+        user.setCoins(user.getCoins() + Integer.parseInt(info[0])/10);
+        user.setExperience(user.getExperience() + 1 + Integer.parseInt(info[0])/15);
+        if(Boolean.parseBoolean(info[1])){
+            user.setExperience(user.getExperience() + 5);
+        }
+        this.session.update(user);
+    }
+
+    @Override
+    public List<GadgetName> loadGame(String idUser) throws SQLException, NoPurchaseWasFoundForIdUser, GadgetDoesNotExistException {
+        logger.info("Loading Game...");
+        List<Gadget> purchases = purchasedGadgets(idUser);
+        List<GadgetName> gameStartInfo = new ArrayList<>();
+        for(Gadget gadget : purchases) {
+            switch (gadget.getDescription()) {
+                case "Water Retaw":
+                    gameStartInfo.add(new GadgetName("Water"));
+                    break;
+                case "Fire Erif":
+                    gameStartInfo.add(new GadgetName("Fire"));
+                    break;
+                case "Earth Htrae":
+                    gameStartInfo.add(new GadgetName("Earth"));
+                    break;
+                case "Cloud Duolc":
+                    gameStartInfo.add(new GadgetName("Cloud"));
+                    break;
+            }
+        }
+        while(gameStartInfo.size()!=4) {
+            gameStartInfo.add(new GadgetName(""));
+        }
+        logger.info("Game loaded");
+        return gameStartInfo;
     }
 }
 

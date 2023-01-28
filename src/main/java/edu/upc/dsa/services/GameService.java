@@ -49,6 +49,7 @@ public class GameService {
             this.tm.addFAQ("How do I get experience?", "Playing more and more");
         }
     }
+
     @GET
     @ApiOperation(value = "Gives the shop gadgets", notes = "ordered by price")
     @ApiResponses(value = {
@@ -62,6 +63,7 @@ public class GameService {
         GenericEntity<List<Gadget>> entity = new GenericEntity<List<Gadget>>(gadgetList) {};
         return Response.status(201).entity(entity).build();
     }
+
     @GET
     @ApiOperation(value = "Gives the users", notes = "User list")
     @ApiResponses(value = {
@@ -90,15 +92,6 @@ public class GameService {
         return Response.status(201).entity(entity).build();
     }
 
-    /*
-    public List<UserInformation> getAlphabeticUserInfoList(List<User> userlist){
-        List<UserInformation> userinfolist = new ArrayList<>();
-        for(User u:userlist){
-            UserInformation userInformation = new UserInformation(u.getName(),u.getSurname(), u.getDate(),u.getCredentials());
-            userinfolist.add(userInformation);
-        }
-        return userinfolist;
-    }*/
     @GET
     @ApiOperation(value = "Gives a Gadget by id", notes = "With an id")
     @ApiResponses(value = {
@@ -116,6 +109,7 @@ public class GameService {
             return Response.status(404).build();
         }
     }
+
     @GET
     @ApiOperation(value = "Gives a User by id", notes = "With an id")
     @ApiResponses(value = {
@@ -135,6 +129,7 @@ public class GameService {
             return Response.status(404).build();
         }
     }
+
     @POST
     @ApiOperation(value = "create a new User", notes = "Do you want to register to our shop?")
     @ApiResponses(value = {
@@ -156,6 +151,7 @@ public class GameService {
 
 
     }
+
     @POST
     @ApiOperation(value = "Login to the shop", notes = "Do you want to log in to our shop?")
     @ApiResponses(value = {
@@ -175,6 +171,7 @@ public class GameService {
             return Response.status(409).build();
         }
     }
+
     @POST
     @ApiOperation(value = "create a new Gadget", notes = "Do you want to create a new Gadget?")
     @ApiResponses(value = {
@@ -192,6 +189,7 @@ public class GameService {
         }
         return Response.status(201).entity(newGadget).build();
     }
+
     @PUT
     @ApiOperation(value = "buy a Gadget", notes = "Do you want to buy a Gadget?")
     @ApiResponses(value = {
@@ -217,6 +215,7 @@ public class GameService {
             return Response.status(409).build();
         }
     }
+
     @PUT
     @ApiOperation(value = "update a Gadget", notes = "Do you want to update a Gadget?")
     @ApiResponses(value = {
@@ -233,6 +232,7 @@ public class GameService {
             return Response.status(401).build();
         }
     }
+
     @DELETE
     @ApiOperation(value = "Deletes a gadget", notes = "Deletes a gadget")
     @ApiResponses(value = {
@@ -273,6 +273,7 @@ public class GameService {
             throw new RuntimeException(e);
         }
     }
+
     @PUT
     @ApiOperation(value = "update Password", notes = "Do you want to change the password?")
     @ApiResponses(value = {
@@ -293,6 +294,7 @@ public class GameService {
             return Response.status(403).build();
         }
     }
+
     @GET
     @ApiOperation(value = "Gives the ranking of users", notes = "User list")
     @ApiResponses(value = {
@@ -325,6 +327,7 @@ public class GameService {
         return Response.status(201).build();
 
     }
+
     @POST
     @ApiOperation(value = "create a new User", notes = "Do you want to register to our shop?")
     @ApiResponses(value = {
@@ -346,6 +349,7 @@ public class GameService {
         }
 
     }
+
     @GET
     @ApiOperation(value = "See all the chat", notes = "of all your friends")
     @ApiResponses(value = {
@@ -358,6 +362,7 @@ public class GameService {
         GenericEntity<List<ChatMessage>> entity = new GenericEntity<List<ChatMessage>>(listOfChats) {};
         return Response.status(201).entity(entity).build();
     }
+
     @POST
     @ApiOperation(value = "post an abuse", notes = "report you abuses")
     @ApiResponses(value = {
@@ -391,12 +396,31 @@ public class GameService {
         return Response.status(201).entity(question).build();
     }
 
+    @POST
+    @ApiOperation(value = "Save game info", notes = "Get experience from the game")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful")
 
+    })
+    @Path("/user/saveGame")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public Response saveGame(GameInfo gameInfo) throws SQLException, UserDoesNotExistException {
+        this.tm.saveGame(gameInfo);
+        return Response.status(201).entity(gameInfo).build();
+    }
 
-
-
-
-
+    @GET
+    @ApiOperation(value = "See all the chat", notes = "of all your friends")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = GadgetName.class, responseContainer="List")
+    })
+    @Path("/user/loadGame/{idUser}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response loadGame(@PathParam("idUser") String idUser) throws SQLException, NoPurchaseWasFoundForIdUser, GadgetDoesNotExistException {
+        List<GadgetName> startGameInfo = this.tm.loadGame(idUser);
+        GenericEntity<List<GadgetName>> entity = new GenericEntity<List<GadgetName>>(startGameInfo) {};
+        return Response.status(201).entity(entity).build();
+    }
 }
 
 
