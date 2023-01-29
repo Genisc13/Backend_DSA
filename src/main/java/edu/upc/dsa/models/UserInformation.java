@@ -11,17 +11,18 @@ public class UserInformation {
     String password;
     int coins;
     String profilePicture;
+    Boolean admin;
 
     public UserInformation(){};
 
-    public UserInformation(String name, String surname, String birthday, String email, String password, int coins){
+    public UserInformation(String name, String surname, String birthday, String email, String password, int coins, Boolean admin){
         this.setName(name);
         this.setSurname(surname);
         this.setBirthday(birthday);
         this.setEmail(email);
         this.setPassword(password);
         this.setCoins(coins);
-
+        this.setAdmin(admin);
     }
 
     public UserInformation(User u){
@@ -32,6 +33,7 @@ public class UserInformation {
         this.setPassword(u.getPassword());
         this.setCoins(u.getCoins());
         this.setProfilePicture(u.getProfilePicture());
+        this.setAdmin(u.getAdmin());
     }
 
     private void setProfilePicture(String profilePicture) {
@@ -87,5 +89,12 @@ public class UserInformation {
     }
     public int getCoins(){
         return this.coins;
+    }
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
     }
 }

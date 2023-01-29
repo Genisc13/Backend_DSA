@@ -34,8 +34,8 @@ public class GameService {
         if (tm.numUsers()==0) {
             this.tm.addUser("Alba", "Roma", "23112001", "albaroma@gmail.com", "123456","https://i.pinimg.com/236x/56/77/62/5677627c338956d1cb9bbdb7f49ae79e.jpg");
             this.tm.addUser("Maria", "Ubiergo", "02112001", "meri@gmail.com", "123456", "https://i.pinimg.com/236x/e9/57/2a/e9572a70726980ed5445c02e1058760b.jpg");
-            this.tm.addUser("Guillem", "Purti", "02112001", "guille@gmail.com", "123456", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTty5Z4hEeNEUICuhCAREChxEOhLSAL3KthnN9Cul7zs_gmb73Gcjz09LMFcC-R1q8d2Zc&usqp=CAU");
-        }
+            String idUser = this.tm.addUser("Guillem", "Purti", "02112001", "guille@gmail.com", "123456", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTty5Z4hEeNEUICuhCAREChxEOhLSAL3KthnN9Cul7zs_gmb73Gcjz09LMFcC-R1q8d2Zc&usqp=CAU");
+            this.tm.upgradeUserToAdmin(idUser);        }
         if(tm.numGadgets()==0) {
             this.tm.addGadget("1",3,"Water Retaw","https://art.pixilart.com/sr2d6755ba5061f.png");
             this.tm.addGadget("2",8,"Fire Erif","https://art.pixilart.com/sr2b28f1e9e62aa.png");

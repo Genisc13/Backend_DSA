@@ -36,4 +36,6 @@ public interface GameManager {
     public List<GadgetName> loadGame(String idUser) throws SQLException, NoPurchaseWasFoundForIdUser, GadgetDoesNotExistException;
 
     public void updateProfilePicture(ProfilePicture profilePicture) throws SQLException;
+    public void upgradeUserToAdmin(String idUser) throws SQLException;
+
 }

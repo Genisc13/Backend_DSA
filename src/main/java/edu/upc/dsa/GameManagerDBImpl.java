@@ -334,6 +334,28 @@ public class GameManagerDBImpl implements GameManager{
         logger.info("Report of the abuse being cooked");
         this.session.save(abuse);
         logger.info("The abuse is informed by "+abuse.getInformer()+" and its description is "+abuse.getMessage());
+        logger.info("Sending Firebase Notification...");
+
+        Notification notification = Notification.builder()
+                .setTitle(abuse.getInformer()+" reported an abuse!")
+                .setBody("Abuse: " + abuse.getMessage())
+                .build();
+
+        Message message = Message.builder()
+                .setNotification(notification)
+                .setTopic("admin")
+                .build();
+
+        try {
+            FirebaseMessaging.getInstance(app).send(message);
+            logger.info("Firebase Notification was sent correctly!");
+        } catch (FirebaseMessagingException ex) {
+            if (ex.getMessagingErrorCode() == MessagingErrorCode.UNREGISTERED) {
+                System.err.println("Device token has been unregistered");
+            } else {
+                System.err.println("Failed to send the notification");
+            }
+        }
     }
 
     @Override
@@ -341,6 +363,28 @@ public class GameManagerDBImpl implements GameManager{
         logger.info("Adding a question...");
         this.session.save(question);
         logger.info("The Question has been added correctly in : "+question.getDate()+", "+question.getTitle()+", "+question.getMessage()+", "+question.getSender());
+        logger.info("Sending Firebase Notification...");
+
+        Notification notification = Notification.builder()
+                .setTitle(question.getSender() + " sent a question")
+                .setBody("Question: " + question.getMessage())
+                .build();
+
+        Message message = Message.builder()
+                .setNotification(notification)
+                .setTopic("admin")
+                .build();
+
+        try {
+            FirebaseMessaging.getInstance(app).send(message);
+            logger.info("Firebase Notification was sent correctly!");
+        } catch (FirebaseMessagingException ex) {
+            if (ex.getMessagingErrorCode() == MessagingErrorCode.UNREGISTERED) {
+                System.err.println("Device token has been unregistered");
+            } else {
+                System.err.println("Failed to send the notification");
+            }
+        }
     }
 
     @Override
@@ -356,26 +400,30 @@ public class GameManagerDBImpl implements GameManager{
     }
 
     @Override
-    public List<GadgetName> loadGame(String idUser) throws SQLException, NoPurchaseWasFoundForIdUser, GadgetDoesNotExistException {
+    public List<GadgetName> loadGame(String idUser) throws SQLException {
         logger.info("Loading Game...");
-        List<Gadget> purchases = purchasedGadgets(idUser);
         List<GadgetName> gameStartInfo = new ArrayList<>();
-        for(Gadget gadget : purchases) {
-            switch (gadget.getDescription()) {
-                case "Water Retaw":
-                    gameStartInfo.add(new GadgetName("Water"));
-                    break;
-                case "Fire Erif":
-                    gameStartInfo.add(new GadgetName("Fire"));
-                    break;
-                case "Earth Htrae":
-                    gameStartInfo.add(new GadgetName("Earth"));
-                    break;
-                case "Cloud Duolc":
-                    gameStartInfo.add(new GadgetName("Cloud"));
-                    break;
+        try{
+            List<Gadget> purchases = purchasedGadgets(idUser);
+            for(Gadget gadget : purchases) {
+                switch (gadget.getDescription()) {
+                    case "Water Retaw":
+                        gameStartInfo.add(new GadgetName("Water"));
+                        break;
+                    case "Fire Erif":
+                        gameStartInfo.add(new GadgetName("Fire"));
+                        break;
+                    case "Earth Htrae":
+                        gameStartInfo.add(new GadgetName("Earth"));
+                        break;
+                    case "Cloud Duolc":
+                        gameStartInfo.add(new GadgetName("Cloud"));
+                        break;
+                }
             }
+        } catch (NoPurchaseWasFoundForIdUser | GadgetDoesNotExistException e ){
         }
+
         while(gameStartInfo.size()!=4) {
             gameStartInfo.add(new GadgetName(""));
         }
@@ -391,6 +439,15 @@ public class GameManagerDBImpl implements GameManager{
         logger.info("Updating the profile picture!");
         this.session.update(userToUpdate);
 
+    }
+
+    @Override
+    public void upgradeUserToAdmin(String idUser) throws SQLException {
+        logger.info("I am trying to update the user profile picture!");
+        User userToUpdate = (User) this.session.get(User.class, "idUser", idUser);
+        userToUpdate.setAdmin(true);
+        logger.info("Updating the profile picture!");
+        this.session.update(userToUpdate);
     }
 }
 

@@ -21,6 +21,7 @@ public class User {
     Boolean currentlyPlaying;
     Integer coins;
     Integer experience;
+    Boolean admin;
 
 
     public User(){};
@@ -36,6 +37,7 @@ public class User {
         Random rnd = new Random();
         this.experience =rnd.nextInt(100);
         this.profilePicture=profilePicture;
+        this.admin = false;
 
     }
 
@@ -110,6 +112,14 @@ public class User {
     public void setProfilePicture(String profilePicture){
         this.profilePicture=profilePicture;
     }
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
+
 
     public void purchaseGadget(Gadget gadget) throws NotEnoughMoneyException {
         if(gadget.getCost()>this.coins){
