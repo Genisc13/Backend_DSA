@@ -34,8 +34,7 @@ public class User {
         this.password = password;
         this.currentlyPlaying = false;
         this.coins = 50;
-        Random rnd = new Random();
-        this.experience =rnd.nextInt(100);
+        this.experience =0;
         this.profilePicture=profilePicture;
         this.admin = false;
 
