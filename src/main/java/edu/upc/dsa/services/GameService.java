@@ -429,7 +429,7 @@ public class GameService {
             @ApiResponse(code = 404, message = "Drama")
 
     })
-    @Path("/user/updateProfilePicture")
+    @Path("/user/update/profilePicture")
     @Consumes({MediaType.APPLICATION_JSON})
     public Response updateProfilePicture(ProfilePicture profilePicture){
         try{
